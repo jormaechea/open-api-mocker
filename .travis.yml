@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "8"
+cache: npm
+script: npm run test:ci
+after_script:
+  - |
+    # Upload coverage to coveralls
+    if [[ -d .nyc_output ]]; then
+      npm install --save-dev coveralls@2
+      nyc report --reporter=text-lcov | coveralls
+    fi

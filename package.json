@@ -5,7 +5,8 @@
   "main": "lib/open-api-mocker.js",
   "scripts": {
     "lint": "eslint ./lib ./tests",
-    "test": "export TEST_ENV=true; mocha --exit -R nyan --recursive tests/",
+    "test": "mocha --exit -R nyan --recursive tests/",
+    "test:ci": "nyc --reporter=html --reporter=text mocha --recursive tests/",
     "coverage": "nyc npm test"
   },
   "files": [

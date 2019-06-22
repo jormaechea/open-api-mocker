@@ -1,0 +1,22 @@
+{
+  "name": "open-api-mocker",
+  "version": "1.0.0",
+  "description": "A mock server based in Open API Specification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "lib/"
+  ],
+  "keywords": [
+    "api",
+    "openapi",
+    "schema",
+    "mock",
+    "mocking",
+    "mock-server"
+  ],
+  "author": "Joaquin Ormaechea",
+  "license": "MIT"
+}

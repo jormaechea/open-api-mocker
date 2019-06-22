@@ -2,9 +2,11 @@
   "name": "open-api-mocker",
   "version": "1.0.0",
   "description": "A mock server based in Open API Specification",
-  "main": "index.js",
+  "main": "lib/open-api-mocker.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./lib ./tests",
+    "test": "export TEST_ENV=true; mocha --exit -R nyan --recursive tests/",
+    "coverage": "nyc npm test"
   },
   "files": [
     "lib/"
@@ -18,5 +20,17 @@
     "mock-server"
   ],
   "author": "Joaquin Ormaechea",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "husky": "^2.4.1",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
+    "sinon": "^7.3.2"
+  },
+  "dependencies": {
+    "superstruct": "^0.6.1"
+  }
 }

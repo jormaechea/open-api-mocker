@@ -2,7 +2,8 @@
 
 const assert = require('assert');
 
-const { Parser, ParserError, Server } = require('../../lib/servers');
+const ParserError = require('../../lib/errors/parser-error');
+const { Parser, Server } = require('../../lib/servers');
 
 describe('Servers', () => {
 

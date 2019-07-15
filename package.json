@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "A mock server based in Open API Specification",
   "main": "lib/open-api-mocker.js",
+  "bin": {
+    "open-api-mocker": "lib/open-api-mocker-cli.js"
+  },
   "scripts": {
     "lint": "eslint ./lib ./tests",
-    "test": "mocha --exit -R nyan --recursive tests/",
+    "test": "mocha -R nyan --recursive tests/",
     "test:ci": "nyc --reporter=html --reporter=text mocha --recursive tests/",
     "coverage": "nyc npm test"
   },
@@ -32,6 +35,9 @@
     "sinon": "^7.3.2"
   },
   "dependencies": {
-    "superstruct": "^0.6.1"
+    "express": "^4.17.1",
+    "superstruct": "^0.6.1",
+    "yamljs": "^0.3.0",
+    "yargs": "^13.2.4"
   }
 }

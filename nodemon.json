@@ -1,0 +1,4 @@
+{
+	"ext": "js,json,yml,yaml",
+	"exec": "node lib/open-api-mocker-cli.js -s tests/resources/pet-store.yml"
+}

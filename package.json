@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "json-refs": "^3.0.13",
     "superstruct": "^0.6.1",
     "yamljs": "^0.3.0",
     "yargs": "^13.2.4"

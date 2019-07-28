@@ -24,16 +24,16 @@ describe('Openapi', () => {
 			sandbox.restore();
 		});
 
-		it('Should throw a ParserError if openapi is not defined', async () => {
+		it('Should set the parameters to the server', async () => {
 
 			const openApiMocker = new OpenApiMocker({ schema });
 
-			openApiMocker.validate();
+			await openApiMocker.validate();
 			await openApiMocker.mock();
 
 			sandbox.assert.calledOnce(Server.prototype.setServers);
 			sandbox.assert.calledOnce(Server.prototype.setPort);
-			sandbox.assert.notCalled(Server.prototype.setPaths);
+			sandbox.assert.calledOnce(Server.prototype.setPaths);
 			sandbox.assert.calledOnce(Server.prototype.init);
 		});
 

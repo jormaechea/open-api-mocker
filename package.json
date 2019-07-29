@@ -31,6 +31,7 @@
     "eslint-plugin-import": "^2.17.3",
     "husky": "^2.4.1",
     "mocha": "^6.1.4",
+    "mock-require": "^3.0.3",
     "nyc": "^14.1.1",
     "sinon": "^7.3.2"
   },

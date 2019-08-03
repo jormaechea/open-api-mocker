@@ -27,10 +27,10 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3",
-    "husky": "^2.4.1",
-    "mocha": "^6.1.4",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.2",
+    "mocha": "^6.2.0",
     "mock-require": "^3.0.3",
     "nyc": "^14.1.1",
     "sinon": "^7.3.2"
@@ -40,6 +40,6 @@
     "json-refs": "^3.0.13",
     "superstruct": "^0.6.1",
     "yamljs": "^0.3.0",
-    "yargs": "^13.2.4"
+    "yargs": "^13.3.0"
   }
 }

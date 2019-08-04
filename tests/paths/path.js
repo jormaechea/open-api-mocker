@@ -166,7 +166,10 @@ describe('Paths', () => {
 			const response = path.getResponse();
 
 			assert.deepStrictEqual(response, {
-				hello: 'world'
+				statusCode: 200,
+				body: {
+					hello: 'world'
+				}
 			});
 		});
 	});

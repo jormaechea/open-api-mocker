@@ -143,7 +143,7 @@ describe('Paths', () => {
 
 	describe('Get response', () => {
 
-		it('Should call the response generator with the first available response', () => {
+		it('Should call the response generator with the first available response if no preferred statusCode is passed', () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -164,6 +164,86 @@ describe('Paths', () => {
 			});
 
 			const response = path.getResponse();
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				body: {
+					hello: 'world'
+				}
+			});
+		});
+
+		it('Should call the response generator with the preferred response based on the passed statusCode', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								example: {
+									hello: 'world'
+								}
+							}
+						}
+					},
+					401: {
+						description: 'Unauthorized',
+						content: {
+							'application/json': {
+								example: {
+									message: 'Unauthorized'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse('401');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 401,
+				body: {
+					message: 'Unauthorized'
+				}
+			});
+		});
+
+		it('Should call the response generator with the first response if preferred response is not available', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								example: {
+									hello: 'world'
+								}
+							}
+						}
+					},
+					401: {
+						description: 'Unauthorized',
+						content: {
+							'application/json': {
+								example: {
+									message: 'Unauthorized'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse('403');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,

@@ -1343,6 +1343,7 @@ describe('Paths', () => {
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
+				headers: undefined,
 				body: {
 					hello: 'world'
 				}
@@ -1383,6 +1384,7 @@ describe('Paths', () => {
 
 			assert.deepStrictEqual(response, {
 				statusCode: 401,
+				headers: undefined,
 				body: {
 					message: 'Unauthorized'
 				}
@@ -1423,6 +1425,55 @@ describe('Paths', () => {
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
+				headers: undefined,
+				body: {
+					hello: 'world'
+				}
+			});
+		});
+
+		it('Should generate the response with the response\'s headers', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						headers: {
+							'x-foo': {
+								schema: {
+									type: 'string',
+									example: 'bar'
+								}
+							},
+							'x-more-foo': {
+								schema: {
+									type: 'string',
+									example: 'baz'
+								}
+							}
+						},
+						content: {
+							'application/json': {
+								example: {
+									hello: 'world'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse();
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				headers: {
+					'x-foo': 'bar',
+					'x-more-foo': 'baz'
+				},
 				body: {
 					hello: 'world'
 				}

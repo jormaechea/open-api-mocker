@@ -38,6 +38,40 @@ describe('Response Generator', () => {
 			});
 		});
 
+		it('Should return the schema\'s example if it\'s defined', () => {
+
+			const responseSchema = {
+				schema: {
+					example: {
+						foo: 'bar'
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, {
+				foo: 'bar'
+			});
+		});
+
+		it('Should return the schema\'s first example if examples is defined', () => {
+
+			const responseSchema = {
+				schema: {
+					examples: [{
+						foo: 'bar'
+					}]
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, {
+				foo: 'bar'
+			});
+		});
+
 		it('Should return the first enum element if enum is defined', () => {
 
 			const responseSchema = {

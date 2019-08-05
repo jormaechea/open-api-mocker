@@ -20,11 +20,12 @@ Just run `open-api-mocker` in your console, and every available setting will be 
 - [x] Read yaml and json open api v3 schemas.
 - [x] Port binding selection
 - [x] Request parameters validation
+- [ ] Request body validation
 - [x] Response body and headers generation based on examples or schemas
 - [x] Response selection based using `Prefer: statusCode=XXX` request header.
 - [x] Request and response logging
-- [ ] API Authentication
 - [ ] Servers basepath support
+- [ ] API Authentication
 
 ## Tests
 

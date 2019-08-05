@@ -1314,6 +1314,110 @@ describe('Paths', () => {
 
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
+
+			it('Should cast numbers for number parameters', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					parameters: [
+						{
+							in: 'query',
+							name: 'foo',
+							required: true,
+							schema: {
+								type: 'number'
+							}
+						}
+					]
+				});
+
+				const validation = path.validateRequestParameters({
+					query: {
+						foo: '10'
+					}
+				});
+
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should cast numbers for integer parameters', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					parameters: [
+						{
+							in: 'query',
+							name: 'foo',
+							required: true,
+							schema: {
+								type: 'integer'
+							}
+						}
+					]
+				});
+
+				const validation = path.validateRequestParameters({
+					query: {
+						foo: '10'
+					}
+				});
+
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should cast true boolean for boolean parameters', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					parameters: [
+						{
+							in: 'query',
+							name: 'foo',
+							required: true,
+							schema: {
+								type: 'boolean'
+							}
+						}
+					]
+				});
+
+				const validation = path.validateRequestParameters({
+					query: {
+						foo: 'true'
+					}
+				});
+
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should cast false boolean for boolean parameters', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					parameters: [
+						{
+							in: 'query',
+							name: 'foo',
+							required: true,
+							schema: {
+								type: 'boolean'
+							}
+						}
+					]
+				});
+
+				const validation = path.validateRequestParameters({
+					query: {
+						foo: 'false'
+					}
+				});
+
+				assert.deepStrictEqual(validation, []);
+			});
 		});
 	});
 

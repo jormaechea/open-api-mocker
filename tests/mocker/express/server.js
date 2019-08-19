@@ -95,9 +95,9 @@ describe('Mocker', () => {
 			server.init();
 
 			sandbox.assert.calledOnce(expressAppMock.get);
-			sandbox.assert.calledWithExactly(expressAppMock.get.getCall(0), '/hello-world', sandbox.match.func);
+			sandbox.assert.calledWithExactly(expressAppMock.get.getCall(0), ['/hello-world'], sandbox.match.func);
 			sandbox.assert.calledOnce(expressAppMock.post);
-			sandbox.assert.calledWithExactly(expressAppMock.post.getCall(0), '/hello-world/:world', sandbox.match.func);
+			sandbox.assert.calledWithExactly(expressAppMock.post.getCall(0), ['/hello-world/:world'], sandbox.match.func);
 		});
 	});
 });

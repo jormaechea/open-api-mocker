@@ -24,7 +24,7 @@ Just run `open-api-mocker` in your console, and every available setting will be 
 - [x] Response body and headers generation based on examples or schemas
 - [x] Response selection based using `Prefer: statusCode=XXX` request header.
 - [x] Request and response logging
-- [ ] Servers basepath support
+- [x] Servers basepath support
 - [ ] API Authentication
 
 ## Tests

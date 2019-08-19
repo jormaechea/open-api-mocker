@@ -187,179 +187,6 @@ describe('Paths', () => {
 			sinon.assert.match(validation, [sinon.match.string]);
 		});
 
-		it('Should pass validation if requestBody is not set', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get'
-			});
-
-			const validation = path.validateRequestBody(undefined);
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should pass validation if requestBody is not required and no body was received', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: false
-				}
-			});
-
-			const validation = path.validateRequestBody(undefined);
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should fail validation if requestBody is required and no body was received', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true
-				}
-			});
-
-			const validation = path.validateRequestBody(undefined);
-			sinon.assert.match(validation, [sinon.match.string]);
-		});
-
-		it('Should pass validation if requestBody has no content', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should pass validation if requestBody has no content for application/json', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/other': {
-							schema: {}
-						}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should pass validation if requestBody has no content schema for application/json', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/json': {}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should pass validation if requestBody type is matched (as object)', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/json': {
-							schema: {
-								type: 'object'
-							}
-						}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should pass validation if requestBody type is matched (as array)', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/json': {
-							schema: {
-								type: 'array'
-							}
-						}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody([]);
-			assert.deepStrictEqual(validation, []);
-		});
-
-		it('Should fail validation if requestBody type is not matched', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/json': {
-							schema: {
-								type: 'array'
-							}
-						}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			sinon.assert.match(validation, [sinon.match.string]);
-		});
-
-		it('Should fail validation if requestBody type is invalid', () => {
-
-			const path = new Path({
-				uri: '/hello',
-				httpMethod: 'get',
-				requestBody: {
-					required: true,
-					content: {
-						'application/json': {
-							schema: {
-								type: 'somInvalidType'
-							}
-						}
-					}
-				}
-			});
-
-			const validation = path.validateRequestBody({});
-			sinon.assert.match(validation, [sinon.match.string]);
-		});
-
 		context('Headers validation', () => {
 
 			it('Should fail for a missing required header', () => {
@@ -1593,474 +1420,299 @@ describe('Paths', () => {
 			});
 		});
 
-		context('Request validation', () => {
+		context('Body validation', () => {
 
-			it('Should pass for a valid array parameter value', () => {
+			it('Should pass validation if requestBody is not set', () => {
 
 				const path = new Path({
 					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'array'
-							}
-						}
-					]
+					httpMethod: 'get'
 				});
 
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: ['bar', 'yeah']
-					}
-				});
-
+				const validation = path.validateRequestBody(undefined);
 				assert.deepStrictEqual(validation, []);
 			});
 
-			it('Should fail for an object in an array parameter value', () => {
+			it('Should pass validation if requestBody is not required and no body was received', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'array'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: { bar: 'yeah' }
+					requestBody: {
+						required: false
 					}
 				});
 
+				const validation = path.validateRequestBody(undefined);
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should fail validation if requestBody is required and no body was received', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true
+					}
+				});
+
+				const validation = path.validateRequestBody(undefined);
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
 
-			it('Should pass for a valid object parameter value', () => {
+			it('Should pass validation if requestBody has no content', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'object'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: { bar: 'yeah' }
+					requestBody: {
+						required: true
 					}
 				});
 
+				const validation = path.validateRequestBody({});
 				assert.deepStrictEqual(validation, []);
 			});
 
-			it('Should fail for an array in an object parameter value', () => {
+			it('Should pass validation if requestBody has no content for application/json', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'object'
+					requestBody: {
+						required: true,
+						content: {
+							'application/other': {
+								schema: {}
 							}
 						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: ['bar', 'yeah']
 					}
 				});
 
+				const validation = path.validateRequestBody({});
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should pass validation if requestBody has no content schema for application/json', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {}
+						}
+					}
+				});
+
+				const validation = path.validateRequestBody({});
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should pass validation if requestBody type is matched (as object)', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'object'
+								}
+							}
+						}
+					}
+				});
+
+				const validation = path.validateRequestBody({});
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should pass validation if requestBody type is matched (as array)', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'array'
+								}
+							}
+						}
+					}
+				});
+
+				const validation = path.validateRequestBody([]);
+				assert.deepStrictEqual(validation, []);
+			});
+
+			it('Should fail validation if requestBody type is not matched', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'array'
+								}
+							}
+						}
+					}
+				});
+
+				const validation = path.validateRequestBody({});
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
 
-			it('Should fail for a string in an object parameter value', () => {
+			it('Should fail validation if requestBody type is invalid', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'object'
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'somInvalidType'
+								}
 							}
 						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'bar'
 					}
 				});
 
+				const validation = path.validateRequestBody({});
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
 
-			it('Should pass for a valid number parameter value', () => {
+			it('Should fail validation if requestBody has a missing required property', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'number'
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'object',
+									properties: {
+										name: {
+											type: 'string'
+										},
+										age: {
+											type: 'integer'
+										}
+									},
+									required: ['name']
+								}
 							}
 						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 10
 					}
 				});
 
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should pass for a float in an number parameter value', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'number'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 10.5
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should fail for a string in an number parameter value', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'number'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'bar'
-					}
-				});
-
+				const validation = path.validateRequestBody({});
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
 
-			it('Should pass for a valid integer parameter value', () => {
+			it('Should fail validation if requestBody has a property that does not match the schema', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'integer'
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'object',
+									properties: {
+										name: {
+											type: 'string'
+										},
+										age: {
+											type: 'integer'
+										}
+									},
+									required: ['name']
+								}
 							}
 						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 10
 					}
 				});
 
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should fail for a float in an integer parameter value', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'integer'
-							}
-						}
-					]
+				const validation = path.validateRequestBody({
+					name: 'John Doe',
+					age: 'Not a valid date'
 				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 10.5
-					}
-				});
-
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
 
-			it('Should fail for a string in an integer parameter value', () => {
+			it('Should fail validation if requestBody has a property that does not match the schema with depth of 2', () => {
 
 				const path = new Path({
 					uri: '/hello',
 					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'integer'
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'object',
+									properties: {
+										name: {
+											type: 'string'
+										},
+										age: {
+											type: 'integer'
+										},
+										pets: {
+											type: 'array',
+											items: {
+												type: 'object',
+												properties: {
+													type: {
+														type: 'string',
+														enum: ['dog', 'cat']
+													},
+													nickname: {
+														type: 'string'
+													}
+												}
+											}
+										}
+									},
+									required: ['name']
+								}
 							}
 						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'bar'
 					}
 				});
 
+				const validation = path.validateRequestBody({
+					name: 'John Doe',
+					pets: [
+						{
+							type: 'dog',
+							nickname: 'Doggy'
+						},
+						{
+							type: 'snake',
+							nickname: 'Cobra'
+						}
+					]
+				});
 				sinon.assert.match(validation, [sinon.match.string]);
-			});
-
-			it('Should pass for a valid boolean parameter value', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'boolean'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: true
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should fail for a string in a boolean parameter value', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'boolean'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'bar'
-					}
-				});
-
-				sinon.assert.match(validation, [sinon.match.string]);
-			});
-
-			it('Should fail for an invalid parameter type', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'unknown'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'bar'
-					}
-				});
-
-				sinon.assert.match(validation, [sinon.match.string]);
-			});
-
-			it('Should cast numbers for number parameters', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'number'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: '10'
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should cast numbers for integer parameters', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'integer'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: '10'
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should cast true boolean for boolean parameters', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'boolean'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'true'
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
-			});
-
-			it('Should cast false boolean for boolean parameters', () => {
-
-				const path = new Path({
-					uri: '/hello',
-					httpMethod: 'get',
-					parameters: [
-						{
-							in: 'query',
-							name: 'foo',
-							required: true,
-							schema: {
-								type: 'boolean'
-							}
-						}
-					]
-				});
-
-				const validation = path.validateRequestParameters({
-					query: {
-						foo: 'false'
-					}
-				});
-
-				assert.deepStrictEqual(validation, []);
 			});
 		});
 	});

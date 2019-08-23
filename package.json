@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint ./lib ./tests",
     "test": "mocha -R nyan --recursive --require tests/bootstrap.js tests/",
-    "test:ci": "nyc --reporter=html --reporter=text mocha --recursive tests/",
+    "test:ci": "nyc --reporter=lcov mocha --recursive tests/",
+    "coverage:ci": "nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc npm test"
   },
   "files": [
@@ -26,6 +27,7 @@
   "author": "Joaquin Ormaechea",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^3.0.6",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",

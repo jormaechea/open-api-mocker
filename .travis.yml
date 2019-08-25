@@ -23,7 +23,6 @@ jobs:
       script:
         - echo 'Preparing deploy...'
         - VERSION=$(echo $TRAVIS_TAG | sed -e "s/^v//g")
-        - docker build -t jormaechea/open-api-mocker:$VERSION --build-arg open_api_mocker_version=$VERSION .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
       deploy:
         - provider: npm
@@ -31,4 +30,4 @@ jobs:
             secure: "NqhgyPgQYZujCp4k4jTIh8QLxetfeLwBKHGQEHTTeYW71glykoZ99lpXpZy7nmVW1Zx4h3F+SHPTfinjxHzfH7AGCJfhpZQrFQOZ4XBiafo5Ht5CCMfbIodl0K6M0RlM/O25o5WmgOGEqnbcjbw1GBHDx2nbKaPymLLWVP8cK2TkHZfNat3t3Lm2mY9iqB2UjNZt3Zk4DUOjngkP8DheJFOSPsRNtkHaOHb2ST2OyivzGMCyt/mmkP7qXu1+SIedvHgpgPYnJXM1Y/SyLDqinir75tYsLHatasXaDwItaLUHYY96eiBZZ2aheWC6R1lwaK8R++N7DKTmuf/yfE/0gihzNF/krE6xBHgqb3knm1zhV1IhxWCeBq5oPLOrjEkc7ms4TSlM3RSfZDa7hdEzDqX9JAXTbhovXXTonkSzASel2q1I9w8T/lDDMOEgMSv8lXRyS6/f3Z9K2za+CmXza+EdvUemGwXiaGC7ISROrZyTWjsSQ1iL6kgGVZ8S6QYDaJ3zQFQ8ZHAduyO7bLsH4mu8MbPRyheIIjdwyhO6kxengz5dXzj4ZNuq3iu6A6OP5CrL+xVdcBX7o7szk/BQJQWtFtQ+fdvN1mBfJXaCqK6+xxqqPhPQywCSy90w2WrqF2YJqR435QbrSajR7wXRsxaHHqTJy7i+3SmgISJkeY8="
           api_key: $NPM_TOKEN
         - provider: script
-          script: docker push jormaechea/open-api-mocker:$VERSION
+          script: docker build -t jormaechea/open-api-mocker:$VERSION --build-arg open_api_mocker_version=$VERSION . && docker push jormaechea/open-api-mocker:$VERSION

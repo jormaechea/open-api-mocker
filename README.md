@@ -13,8 +13,6 @@ An API mocker based in the Open API 3.0 specification.
 npm i -g open-api-mocker
 ```
 
-Run `open-api-mocker --help` to see available options.
-
 ### Using docker
 
 ```
@@ -29,7 +27,7 @@ docker run -v "$PWD/myschema.json:/app/schema.json" -it jormaechea/open-api-mock
 
 ## Usage
 
-Just run `open-api-mocker` in your console, and every available setting will be prompted.
+Just run `open-api-mocker --help` in your console, and every available setting will be prompted.
 
 ## Capabilities
 

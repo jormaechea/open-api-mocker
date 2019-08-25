@@ -15,7 +15,17 @@ npm i -g open-api-mocker
 
 Run `open-api-mocker --help` to see available options.
 
-**Soon**, there will be a dockerized version available.
+### Using docker
+
+```
+docker run -v "$PWD/myschema.json:/app/schema.json" -it jormaechea/open-api-mocker
+```
+
+Or to run an specific version
+
+```
+docker run -v "$PWD/myschema.json:/app/schema.json" -it jormaechea/open-api-mocker:X.Y.Z`
+```
 
 ## Usage
 

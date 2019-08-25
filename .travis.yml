@@ -32,6 +32,6 @@ jobs:
           on:
             tags: true
         - provider: script
-          script: docker build -t jormaechea/open-api-mocker:$VERSION --build-arg open_api_mocker_version=$VERSION . && docker push jormaechea/open-api-mocker:$VERSION
+          script: docker build -t jormaechea/open-api-mocker:$VERSION -t jormaechea/open-api-mocker:latest --build-arg open_api_mocker_version=$VERSION . && docker push jormaechea/open-api-mocker:$VERSION && docker push jormaechea/open-api-mocker:latest
           on:
             tags: true

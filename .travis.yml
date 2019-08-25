@@ -15,12 +15,13 @@ jobs:
       git:
         depth: 1
       node_js: "10"
+      before_install:
+        - npm i -g makeshift && makeshift -r https://registry.npmjs.org
       script: echo 'Publishing package...'
       deploy:
         provider: npm
         email:
           secure: "NqhgyPgQYZujCp4k4jTIh8QLxetfeLwBKHGQEHTTeYW71glykoZ99lpXpZy7nmVW1Zx4h3F+SHPTfinjxHzfH7AGCJfhpZQrFQOZ4XBiafo5Ht5CCMfbIodl0K6M0RlM/O25o5WmgOGEqnbcjbw1GBHDx2nbKaPymLLWVP8cK2TkHZfNat3t3Lm2mY9iqB2UjNZt3Zk4DUOjngkP8DheJFOSPsRNtkHaOHb2ST2OyivzGMCyt/mmkP7qXu1+SIedvHgpgPYnJXM1Y/SyLDqinir75tYsLHatasXaDwItaLUHYY96eiBZZ2aheWC6R1lwaK8R++N7DKTmuf/yfE/0gihzNF/krE6xBHgqb3knm1zhV1IhxWCeBq5oPLOrjEkc7ms4TSlM3RSfZDa7hdEzDqX9JAXTbhovXXTonkSzASel2q1I9w8T/lDDMOEgMSv8lXRyS6/f3Z9K2za+CmXza+EdvUemGwXiaGC7ISROrZyTWjsSQ1iL6kgGVZ8S6QYDaJ3zQFQ8ZHAduyO7bLsH4mu8MbPRyheIIjdwyhO6kxengz5dXzj4ZNuq3iu6A6OP5CrL+xVdcBX7o7szk/BQJQWtFtQ+fdvN1mBfJXaCqK6+xxqqPhPQywCSy90w2WrqF2YJqR435QbrSajR7wXRsxaHHqTJy7i+3SmgISJkeY8="
-        api_key:
-          secure: "TuKebWSa/8YzCjShmH15QBn8O65QMiZyAzo4ojB0+ZJwXHjjpnO2MsXmAH/eSUyabNfqShQdGDpdK4UugYRwsWACYwbleEzu/XB2E9LfhD9iZHP3Q8/0ARQJjtud65Krla3u5AkABgH6ZCGm/XzEcv3wHmQeLabghahG9EQIRjeipWcDM1Whb3aZjLGgSHGRD7rTZigKSVdlD1unX5gurgo5M5XDZAgzX4AbaQKsOYTcakxOv53f6RUX7lZ6O9scK0I1CWnJiFMgGuiYDUhxxdE/f8h5jOAq6s/dpMPbqUqDJU2U8pm6ReM8tXprpF+KboZIlMpTXc7sBZ7ZxQxB8uzCcGi0lh2BDKFE3HRWG8lVQSWA5ReyKOB2kvA5SsB+VcD6T7EpiI1FuPRmmjHBg0B1q8+p32ggEN04BUPkS0PBd29RGRTqh5pn6Pvt11jjyetZBonQoXShbYu9lOyquHO3jPFjzgh0ZKGmtBIXljiURvQtndrtic0o6GgFfM3J64ELHNpPucJ2i14k7wcyn+e/bT8IPM98O7Au9gDgo8GJ5u3v+Ck/EjCHy+ILcFglj92d0ZLIWS4kOCLbyIiXCFWC8jlvYb8RJmjCB15ZL30f89GG02o67tFMQX+OAGB6k5Np263brgMo7hllmU7hioZHobv+PdKu+EdWgnOvlMg="
+        api_key: $NPM_TOKEN
         on:
           tags: true

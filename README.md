@@ -7,7 +7,13 @@ An API mocker based in the Open API 3.0 specification.
 
 ## Installation
 
-**Soon**, install globally `npm i -g open-api-mocker`
+### Using npm
+
+```
+npm i -g open-api-mocker
+```
+
+Run `open-api-mocker --help` to see available options.
 
 **Soon**, there will be a dockerized version available.
 

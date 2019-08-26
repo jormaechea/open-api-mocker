@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `latest` docker image tag is now generated
 
+### Fixed
+- SIGINT handle improved
+
 ## [1.1.1] - 2019-08-25
 ### Fixed
 - Deployment dependencies fixed

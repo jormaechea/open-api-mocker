@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - SIGINT handle improved
+- NotFound response uris fixed
 
 ## [1.1.1] - 2019-08-25
 ### Fixed

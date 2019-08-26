@@ -16,13 +16,19 @@ npm i -g open-api-mocker
 ### Using docker
 
 ```
-docker run -v "$PWD/myschema.json:/app/schema.json" -it jormaechea/open-api-mocker
+docker run -v "$PWD/myschema.json:/app/schema.json" -p "5000:5000" jormaechea/open-api-mocker
 ```
 
 Or to run an specific version
 
 ```
-docker run -v "$PWD/myschema.json:/app/schema.json" -it jormaechea/open-api-mocker:X.Y.Z`
+docker run -v "$PWD/myschema.json:/app/schema.json" -p "5000:5000" jormaechea/open-api-mocker:X.Y.Z`
+```
+
+You can set any parameter when running inside a docker container
+
+```
+docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/open-api-mocker:X.Y.Z -s /app/schema.json -p 3000`
 ```
 
 ## Usage

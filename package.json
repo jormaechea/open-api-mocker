@@ -49,5 +49,17 @@
     "superstruct": "^0.6.1",
     "yamljs": "^0.3.0",
     "yargs": "^13.3.0"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jormaechea@github.com/jormaechea/open-api-mocker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jormaechea/open-api-mocker/issues"
+  },
+  "homepage": "https://github.com/jormaechea/open-api-mocker#readme"
 }

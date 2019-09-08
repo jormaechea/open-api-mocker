@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.3] - 2019-09-07
+### Added
+- Package json repository links
+
+### Fixed
+- Security issues with dependencies
+
 ## [1.1.2] - 2019-08-25
 ### Added
 - `latest` docker image tag is now generated

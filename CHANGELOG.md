@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.4] - 2019-12-30
+### Fixed
+- CORS configuration improved
+
 ## [1.1.3] - 2019-09-07
 ### Added
 - Package json repository links

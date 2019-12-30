@@ -1,6 +1,5 @@
 'use strict';
 
-// const assert = require('assert');
 const sandbox = require('sinon').createSandbox();
 const YAML = require('yamljs');
 
@@ -26,7 +25,8 @@ describe('Openapi', () => {
 
 		it('Should set the parameters to the server', async () => {
 
-			const openApiMocker = new OpenApiMocker({ schema });
+			const openApiMocker = new OpenApiMocker({});
+			openApiMocker.setSchema(schema);
 
 			await openApiMocker.validate();
 			await openApiMocker.mock();

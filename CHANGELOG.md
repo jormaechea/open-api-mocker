@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2019-12-30
+### Added
+- Added option to watch schema changes
+
 ## [1.1.4] - 2019-12-30
 ### Fixed
 - CORS configuration improved

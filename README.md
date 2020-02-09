@@ -1,16 +1,20 @@
-# Open API Mocker
+# OpenAPI Mocker
 
 [![Build Status](https://travis-ci.org/jormaechea/open-api-mocker.svg?branch=master)](https://travis-ci.org/jormaechea/open-api-mocker)
 [![Coverage Status](https://coveralls.io/repos/github/jormaechea/open-api-mocker/badge.svg?branch=master)](https://coveralls.io/github/jormaechea/open-api-mocker?branch=master)
 
-An API mocker based in the Open API 3.0 specification.
+An API mocker based in the OpenAPI 3.0 specification.
 
-## Installation
+## Installation and usage
 
 ### Using npm
 
 ```
 npm i -g open-api-mocker
+
+open-api-mocker -s my-schema.json -w
+
+open-api-mocker --help # To prompt every available setting.
 ```
 
 ### Using docker
@@ -31,13 +35,9 @@ You can set any parameter when running inside a docker container
 docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/open-api-mocker:X.Y.Z -s /app/schema.json -p 3000`
 ```
 
-## Usage
-
-Just run `open-api-mocker --help` in your console, and every available setting will be prompted.
-
 ## Capabilities
 
-- [x] Read yaml and json open api v3 schemas.
+- [x] Read yaml and json OpenAPI v3 schemas.
 - [x] Port binding selection
 - [x] Request parameters validation
 - [x] Request body validation

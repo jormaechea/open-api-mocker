@@ -1,6 +1,6 @@
 {
   "name": "open-api-mocker",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A mock server based in Open API Specification",
   "main": "lib/open-api-mocker.js",
   "bin": {

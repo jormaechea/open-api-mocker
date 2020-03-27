@@ -78,9 +78,21 @@ describe('Mocker', () => {
 				getResponse: () => ({ message: 'Hi there!' })
 			};
 
-			const pathWithVariables = {
+			const pathWithOneVariable = {
 				httpMethod: 'post',
 				uri: '/hello-world/{world}',
+				getResponse: () => ({ message: 'Hi there again!' })
+			};
+
+			const pathWithVariables = {
+				httpMethod: 'post',
+				uri: '/hello-world/{world}/planet/{myPlanet}',
+				getResponse: () => ({ message: 'Hi there again!' })
+			};
+
+			const pathWithUnderscoredVariable = {
+				httpMethod: 'post',
+				uri: '/hello-world/{my_world}',
 				getResponse: () => ({ message: 'Hi there again!' })
 			};
 
@@ -91,13 +103,15 @@ describe('Mocker', () => {
 			});
 
 			const server = new Server();
-			server.setPaths([simplePath, pathWithVariables]);
+			server.setPaths([simplePath, pathWithOneVariable, pathWithVariables, pathWithUnderscoredVariable]);
 			server.init();
 
 			sandbox.assert.calledOnce(expressAppMock.get);
 			sandbox.assert.calledWithExactly(expressAppMock.get.getCall(0), ['/hello-world'], sandbox.match.func);
-			sandbox.assert.calledOnce(expressAppMock.post);
+			sandbox.assert.calledThrice(expressAppMock.post);
 			sandbox.assert.calledWithExactly(expressAppMock.post.getCall(0), ['/hello-world/:world'], sandbox.match.func);
+			sandbox.assert.calledWithExactly(expressAppMock.post.getCall(1), ['/hello-world/:world/planet/:myPlanet'], sandbox.match.func);
+			sandbox.assert.calledWithExactly(expressAppMock.post.getCall(2), ['/hello-world/:my_world'], sandbox.match.func);
 		});
 	});
 });

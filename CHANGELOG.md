@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.5] - 2020-03-26
+### Fixed
+- Path parameters with underscores are now parsed correctly
+- Paths with multiple parameters are now handled properly
+
 ## [1.2.4] - 2020-02-10
 ### Fixed
 - Added credentials in CORS configuration

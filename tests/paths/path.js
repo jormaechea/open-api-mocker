@@ -1714,6 +1714,44 @@ describe('Paths', () => {
 				});
 				sinon.assert.match(validation, [sinon.match.string]);
 			});
+
+			it('Should fail validation if all of the schemas of an oneOf are not valid', () => {
+
+				const path = new Path({
+					uri: '/hello',
+					httpMethod: 'get',
+					requestBody: {
+						required: true,
+						content: {
+							'application/json': {
+								schema: {
+									type: 'object',
+									properties: {
+										name: {
+											type: 'string'
+										},
+										age: {
+											oneOf: [
+												{ type: 'integer' },
+												{ type: 'object' }
+											]
+										}
+									},
+									required: ['name']
+								}
+							}
+						}
+					}
+				});
+
+				const validation = path.validateRequestBody({
+					name: 'John Doe',
+					age: 'invalidAge'
+				});
+
+				// Three errors: one for integer, one for object and one for the oneOf
+				sinon.assert.match(validation, [sinon.match.string, sinon.match.string, sinon.match.string]);
+			});
 		});
 	});
 

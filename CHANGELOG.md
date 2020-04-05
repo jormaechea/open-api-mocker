@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for strings in schemas with format `"password"`
 
+### Fixed
+- Empty response bodies are now handled properly
+
 ## [1.2.5] - 2020-03-26
 ### Fixed
 - Path parameters with underscores are now parsed correctly

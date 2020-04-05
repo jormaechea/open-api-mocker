@@ -1870,6 +1870,70 @@ describe('Paths', () => {
 			});
 		});
 
+		it('Should not call the response generator with the preferred response based on the passed statusCode if response content is empty', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								example: {
+									hello: 'world'
+								}
+							}
+						}
+					},
+					401: {
+						description: 'Unauthorized'
+					}
+				}
+			});
+
+			const response = path.getResponse('401');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 401,
+				headers: undefined,
+				body: null
+			});
+		});
+
+		it('Should not call the response generator with the first response if response content is empty', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK'
+					},
+					401: {
+						description: 'Unauthorized',
+						content: {
+							'application/json': {
+								example: {
+									message: 'Unauthorized'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse('403');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				headers: undefined,
+				body: null
+			});
+		});
+
 		it('Should generate the response with the response\'s headers', () => {
 
 			const path = new Path({

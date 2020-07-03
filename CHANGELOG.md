@@ -6,9 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2020-07-03
+### Added
+- Added support for path level parameters (#8)
+
+### Fixed
+- Path objects are now correctly as they can have extra standard and extended properties (#8)
+
 ## [1.3.1] - 2020-04-25
 ### Fixed
-- Support for every 3.x.x specification version
+- Support for every 3.x.x specification version (#6)
 
 ## [1.3.0] - 2020-04-05
 ### Added

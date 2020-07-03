@@ -124,7 +124,14 @@ describe('Paths', () => {
 			const expectedPath1 = new Path({
 				uri: '/hello',
 				httpMethod: 'get',
-				parameters: undefined,
+				parameters: [
+					{
+						name: 'name',
+						in: 'query',
+						deprecated: false,
+						required: false
+					}
+				],
 				responses: {
 					200: { description: 'OK' }
 				}

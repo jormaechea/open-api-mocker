@@ -91,6 +91,14 @@ describe('Paths', () => {
 			const paths = parser.parse({
 				paths: {
 					'/hello': {
+						summary: 'Get a hello',
+						description: 'Use this API if you want to be greeted',
+						parameters: [
+							{
+								name: 'name',
+								in: 'query'
+							}
+						],
 						get: {
 							responses: {
 								200: { description: 'OK' }

@@ -1,9 +1,11 @@
 'use strict';
 
-const sandbox = require('sinon').createSandbox();
-const YAML = require('yamljs');
+const fs = require('fs');
 
-const schema = YAML.load('./tests/resources/pet-store.yml');
+const sandbox = require('sinon').createSandbox();
+const YAML = require('js-yaml');
+
+const schema = YAML.safeLoad(fs.readFileSync('./tests/resources/pet-store.yml'));
 
 const OpenApiMocker = require('../lib/open-api-mocker');
 const Server = require('../lib/mocker/express/server.js');

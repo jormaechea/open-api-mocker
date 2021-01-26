@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.2] - 2021-01-26
+### Fixed
+- Fixed exclusiveMinimum and exclusiveMaximum validation
+
 ## [1.4.1] - 2020-10-01
 ### Fixed
 - Changed YAML parsing library for better support (#10)

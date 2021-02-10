@@ -38,6 +38,47 @@ describe('Response Generator', () => {
 			});
 		});
 
+		it('Should return the preferred example if prefer header is set', () => {
+
+			const responseSchema = {
+				examples: {
+					cat: {
+						summary: 'An example of a cat',
+						value: {
+							name: 'Fluffy',
+							petType: 'Cat',
+							color: 'White',
+							gender: 'male',
+							breed: 'Persian'
+						}
+					},
+					dog: {
+						summary: 'An example of a dog with a cat\'s name',
+						value: {
+							name: 'Puma',
+							petType: 'Dog',
+							color: 'Black',
+							gender: 'Female',
+							breed: 'Mixed'
+						}
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema, 'cat');
+
+			assert.deepStrictEqual(response, {
+				summary: 'An example of a cat',
+				value: {
+					name: 'Fluffy',
+					petType: 'Cat',
+					color: 'White',
+					gender: 'male',
+					breed: 'Persian'
+				}
+			});
+		});
+
 		it('Should return the schema\'s example if it\'s defined', () => {
 
 			const responseSchema = {

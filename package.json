@@ -48,6 +48,7 @@
     "js-yaml": "^3.14.0",
     "json-refs": "^3.0.13",
     "lllog": "^1.1.2",
+    "parse-prefer-header": "^1.0.0",
     "superstruct": "^0.6.1",
     "yargs": "^13.3.0"
   },

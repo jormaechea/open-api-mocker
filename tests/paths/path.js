@@ -1803,6 +1803,78 @@ describe('Paths', () => {
 			});
 		});
 
+		it('Should call the response generator with the first available response with given example if no preferred statusCode is passed', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								examples: {
+									hello: {
+										message: 'world'
+									},
+									goodbye: {
+										message: 'yellow brick road'
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse(undefined, 'goodbye');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				headers: undefined,
+				body: {
+					message: 'yellow brick road'
+				}
+			});
+		});
+
+		it('Should call the response generator with the first available response with prefer example & no prefered statusCode, but no match', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								examples: {
+									hello: {
+										message: 'world'
+									},
+									goodbye: {
+										message: 'yellow brick road'
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse(undefined, 'sup');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				headers: undefined,
+				body: {
+					message: 'world'
+				}
+			});
+		});
+
 		it('Should call the response generator with the preferred response based on the passed statusCode', () => {
 
 			const path = new Path({
@@ -1840,6 +1912,52 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					message: 'Unauthorized'
+				}
+			});
+		});
+
+		it('Should call the response generator with the preferred response based on the passed statusCode and passed example', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'application/json': {
+								example: {
+									hello: 'world'
+								}
+							}
+						}
+					},
+					401: {
+						description: 'Unauthorized',
+						content: {
+							'application/json': {
+								examples: {
+									invalid: {
+										message: 'Unauthorized - token invalid'
+									},
+									expired: {
+										message: 'Unauthorized - token expired'
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.getResponse('401', 'expired');
+
+			assert.deepStrictEqual(response, {
+				statusCode: 401,
+				headers: undefined,
+				body: {
+					message: 'Unauthorized - token expired'
 				}
 			});
 		});

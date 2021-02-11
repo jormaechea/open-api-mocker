@@ -31,7 +31,7 @@ describe('Response Generator', () => {
 						value: {
 							foo: 'bar'
 						}
-					}	
+					}
 				}
 			};
 

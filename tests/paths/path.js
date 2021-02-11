@@ -1816,10 +1816,10 @@ describe('Paths', () => {
 							'application/json': {
 								examples: {
 									hello: {
-										message: 'world'
+										value: { hello: 'world' }
 									},
 									goodbye: {
-										message: 'yellow brick road'
+										value: { goodbye: 'yellow brick road' }
 									}
 								}
 							}
@@ -1834,7 +1834,7 @@ describe('Paths', () => {
 				statusCode: 200,
 				headers: undefined,
 				body: {
-					message: 'yellow brick road'
+					goodbye: 'yellow brick road'
 				}
 			});
 		});
@@ -1852,10 +1852,10 @@ describe('Paths', () => {
 							'application/json': {
 								examples: {
 									hello: {
-										message: 'world'
+										value: { hello: 'world' }
 									},
 									goodbye: {
-										message: 'yellow brick road'
+										value: { goodbye: 'yellow brick road' }
 									}
 								}
 							}
@@ -1870,7 +1870,7 @@ describe('Paths', () => {
 				statusCode: 200,
 				headers: undefined,
 				body: {
-					message: 'world'
+					hello: 'world'
 				}
 			});
 		});
@@ -1939,10 +1939,14 @@ describe('Paths', () => {
 							'application/json': {
 								examples: {
 									invalid: {
-										message: 'Unauthorized - token invalid'
+										value: {
+											message: 'Unauthorized - token invalid'
+										}
 									},
 									expired: {
-										message: 'Unauthorized - token expired'
+										value: {
+											message: 'Unauthorized - token expired'
+										}
 									}
 								}
 							}

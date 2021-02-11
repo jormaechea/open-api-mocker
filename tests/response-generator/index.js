@@ -26,9 +26,13 @@ describe('Response Generator', () => {
 		it('Should return the first example if examples is defined', () => {
 
 			const responseSchema = {
-				examples: [{
-					foo: 'bar'
-				}]
+				examples: {
+					first: {
+						value: {
+							foo: 'bar'
+						}
+					}	
+				}
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
@@ -65,17 +69,14 @@ describe('Response Generator', () => {
 				}
 			};
 
-			const response = ResponseGenerator.generate(responseSchema, 'cat');
+			const response = ResponseGenerator.generate(responseSchema, 'dog');
 
 			assert.deepStrictEqual(response, {
-				summary: 'An example of a cat',
-				value: {
-					name: 'Fluffy',
-					petType: 'Cat',
-					color: 'White',
-					gender: 'male',
-					breed: 'Persian'
-				}
+				name: 'Puma',
+				petType: 'Dog',
+				color: 'Black',
+				gender: 'Female',
+				breed: 'Mixed'
 			});
 		});
 

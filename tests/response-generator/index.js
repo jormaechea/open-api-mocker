@@ -26,15 +26,93 @@ describe('Response Generator', () => {
 		it('Should return the first example if examples is defined', () => {
 
 			const responseSchema = {
-				examples: [{
-					foo: 'bar'
-				}]
+				examples: {
+					first: {
+						value: {
+							foo: 'bar'
+						}
+					}
+				}
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.deepStrictEqual(response, {
 				foo: 'bar'
+			});
+		});
+
+		it('Should throw if examples is defined but example has no value', () => {
+
+			const responseSchema = {
+				examples: {
+					first: {
+						foo: 'bar'
+					}
+				}
+			};
+
+			assert.throws(() => ResponseGenerator.generate(responseSchema));
+		});
+
+
+		it('Should return the first example if examples is defined & preferred example value undefined', () => {
+
+			const responseSchema = {
+				examples: {
+					first: {
+						value: {
+							yes: 'no'
+						}
+					},
+					second: {
+						hello: 'goodbye'
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema, 'second');
+
+			assert.deepStrictEqual(response, {
+				yes: 'no'
+			});
+		});
+
+		it('Should return the preferred example if prefer header is set', () => {
+
+			const responseSchema = {
+				examples: {
+					cat: {
+						summary: 'An example of a cat',
+						value: {
+							name: 'Fluffy',
+							petType: 'Cat',
+							color: 'White',
+							gender: 'male',
+							breed: 'Persian'
+						}
+					},
+					dog: {
+						summary: 'An example of a dog with a cat\'s name',
+						value: {
+							name: 'Puma',
+							petType: 'Dog',
+							color: 'Black',
+							gender: 'Female',
+							breed: 'Mixed'
+						}
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema, 'dog');
+
+			assert.deepStrictEqual(response, {
+				name: 'Puma',
+				petType: 'Dog',
+				color: 'Black',
+				gender: 'Female',
+				breed: 'Mixed'
 			});
 		});
 

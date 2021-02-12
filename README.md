@@ -42,7 +42,7 @@ docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/op
 - [x] Request parameters validation
 - [x] Request body validation
 - [x] Response body and headers generation based on examples or schemas
-- [x] Response selection based using `Prefer: statusCode=XXX` request header.
+- [x] Response selection using request header: `Prefer: statusCode=XXX` or `Prefer: example=name` 
 - [x] Request and response logging
 - [x] Servers basepath support
 - [ ] API Authentication

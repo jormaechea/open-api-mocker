@@ -5,7 +5,7 @@ const fs = require('fs');
 const sandbox = require('sinon').createSandbox();
 const YAML = require('js-yaml');
 
-const schema = YAML.safeLoad(fs.readFileSync('./tests/resources/pet-store.yml'));
+const schema = YAML.load(fs.readFileSync('./tests/resources/pet-store.yml'));
 
 const OpenApiMocker = require('../lib/open-api-mocker');
 const Server = require('../lib/mocker/express/server.js');

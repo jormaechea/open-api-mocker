@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2021-02-12
+### Added
+- Support for response section when `examples` property is present using `Prefer` header
+- Support for more content-types: `application/x-www-form-urlencoded`, `text/plain` and `application/octet-stream`
+
+### Fixed
+- Dependencies update
+
 ## [1.4.2] - 2021-01-26
 ### Fixed
 - Fixed exclusiveMinimum and exclusiveMaximum validation

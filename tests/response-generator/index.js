@@ -67,7 +67,7 @@ describe('Response Generator', () => {
 					},
 					second: {
 						hello: 'goodbye'
-					},
+					}
 				}
 			};
 

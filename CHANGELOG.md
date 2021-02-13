@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2021-02-12
+### Fixed
+- Removed CI/CD for node 8
+
 ## [1.5.0] - 2021-02-12
 ### Added
 - Support for response section when `examples` property is present using `Prefer` header

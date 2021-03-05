@@ -402,12 +402,12 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return a generated response with value generated using relevant faker method if X-Faker field is ' +
-			'present in and exists in faker', () => {
+		it('Should return a generated response with value generated using relevant faker method if x-faker extension is ' +
+			'present in and method exists in faker', () => {
 			sinon.replace(faker.name, 'firstName', sinon.fake.returns('bob'));
 			const responseSchema = {
 				type: 'string',
-				'X-Faker': 'name.firstName'
+				'x-faker': 'name.firstName'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
@@ -415,11 +415,11 @@ describe('Response Generator', () => {
 			assert.strictEqual(response, 'bob');
 		});
 
-		it('Should return a generated response with standard primitive value if X-Faker field is ' +
+		it('Should return a generated response with standard primitive value if x-faker field is ' +
 			'present but method does not exist in faker', () => {
 			const responseSchema = {
 				type: 'string',
-				'X-Faker': 'idonotexist'
+				'x-faker': 'idonotexist'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);

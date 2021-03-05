@@ -206,6 +206,21 @@ describe('Response Generator', () => {
 			assert.strictEqual(response[0], response[0] | 1);
 		});
 
+		it('Should return an array with specified number of items if type is defined as array and x-count extension is specified', () => {
+
+			const responseSchema = {
+				type: 'array',
+				'x-count': 2,
+				items: {
+					type: 'integer'
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, [1, 1]);
+		});
+
 		it('Should return an empty object if type is defined as object without any other props', () => {
 
 			const responseSchema = {

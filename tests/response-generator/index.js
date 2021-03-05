@@ -1,10 +1,16 @@
 'use strict';
 
 const assert = require('assert');
+const faker = require('faker');
+const sinon = require('sinon');
 
 const ResponseGenerator = require('../../lib/response-generator');
 
+
 describe('Response Generator', () => {
+	beforeEach(() => {
+		sinon.restore();
+	});
 
 	describe('Generate', () => {
 
@@ -394,6 +400,31 @@ describe('Response Generator', () => {
 					employeeId: '0001222-B'
 				}
 			});
+		});
+
+		it('Should return a generated response with value generated using relevant faker method if X-Faker field is ' +
+			'present in and exists in faker', () => {
+			sinon.replace(faker.name, 'firstName', sinon.fake.returns('bob'));
+			const responseSchema = {
+				type: 'string',
+				'X-Faker': 'name.firstName'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'bob');
+		});
+
+		it('Should return a generated response with standard primitive value if X-Faker field is ' +
+			'present but method does not exist in faker', () => {
+			const responseSchema = {
+				type: 'string',
+				'X-Faker': 'idonotexist'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
 		});
 
 	});

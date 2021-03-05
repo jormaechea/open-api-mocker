@@ -45,6 +45,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "faker": "^5.4.0",
     "js-yaml": "^4.0.0",
     "json-refs": "^3.0.15",
     "lllog": "^1.1.2",

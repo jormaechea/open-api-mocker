@@ -49,6 +49,7 @@
     "js-yaml": "^4.0.0",
     "json-refs": "^3.0.15",
     "lllog": "^1.1.2",
+    "micro-memoize": "^4.0.9",
     "parse-prefer-header": "^1.0.0",
     "superstruct": "~0.6.1",
     "yargs": "^16.2.0"

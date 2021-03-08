@@ -430,6 +430,18 @@ describe('Response Generator', () => {
 			assert.strictEqual(response, 'bob');
 		});
 
+		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
+			sinon.replace(faker.date, 'recent', sinon.fake.returns(new Date(2000, 0, 1)));
+			const responseSchema = {
+				type: 'date-time',
+				'x-faker': 'date.recent'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, '2000-01-01T00:00:00.000Z');
+		});
+
 		it('Should return a generated response with standard primitive value if x-faker field is ' +
 			'present but method does not exist in faker', () => {
 			const responseSchema = {

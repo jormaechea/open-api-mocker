@@ -6,7 +6,6 @@ const sinon = require('sinon');
 
 const ResponseGenerator = require('../../lib/response-generator');
 
-
 describe('Response Generator', () => {
 	beforeEach(() => {
 		sinon.restore();

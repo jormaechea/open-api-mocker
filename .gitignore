@@ -5,3 +5,5 @@ jspm_packages
 # Test and coverage reports
 coverage/
 .nyc_output/
+
+.idea/

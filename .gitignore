@@ -6,4 +6,5 @@ jspm_packages
 coverage/
 .nyc_output/
 
+# Editor configuration files
 .idea/

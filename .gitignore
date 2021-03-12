@@ -5,3 +5,6 @@ jspm_packages
 # Test and coverage reports
 coverage/
 .nyc_output/
+
+# Editor configuration files
+.idea/

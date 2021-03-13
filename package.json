@@ -14,7 +14,8 @@
     "coverage": "nyc npm test"
   },
   "files": [
-    "lib/"
+    "lib/",
+    "expess-connector.js"
   ],
   "keywords": [
     "api",

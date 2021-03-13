@@ -1,7 +1,6 @@
-const http = require("http");
 const YAML = require("js-yaml");
 const fs = require("fs");
-const OpenApiMocker = require("./open-api-mocker");
+const OpenApiMocker = require("./lib/open-api-mocker");
 
 function loadSchemaFromDisk(schemaPath) {
   // TODO: MOVE TO COMMON CODE
@@ -14,27 +13,26 @@ function loadSchemaFromDisk(schemaPath) {
 
 /**
  * @example
- * const createServerlessHandler
+ * const createServerlessApp
  * = require('open-api-mocker/serverless');
  *
  * // Initialise using schema directly
  * const schema = require('./schema.json');
- * let serverlessHandler = createServerlessHandler({ schema });
+ * let app = createServerlessApp({ schema });
  * // or initialise using file path
- * serverlessHandler = createServerlessHandler({ schemaFile: '/some/path/to/schema/file.yml' });
+ * app = createServerlessApp({ schemaFile: '/some/path/to/schema/file.yml' });
  *
- * // Example usage for Azure functions - handle function takes a context with the req and res objects
- * function handle(context) {
- *   context.res = serverlessHandler(context.req);
- * }
+ * // The app can then be passed to serverless-express or similar
+ *
  * module.exports = handle;
  * */
 
 /**
  * A function that must be called by the handler of the platform specific serveless function
- * @callback serverlessHandler
- * @param {http.IncomingMessage} req
- * @returns {Object}
+ * @callback RequestHandler
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
  */
 
 /**
@@ -42,9 +40,9 @@ function loadSchemaFromDisk(schemaPath) {
  * @param {Object} options
  * @param {string} [options.schemaPath] The path to a JSON/Yaml file that will be used as the schema
  * @param {Object} [options.schema] The full schema object already loaded via some other means
- * @returns {serverlessHandler}
+ * @returns {RequestHandler}
  */
-function createServerlessHandler(options) {
+function createServerlessApp(options) {
   let { schema } = options;
 
   if (!schema && options.schemaPath)
@@ -52,32 +50,32 @@ function createServerlessHandler(options) {
 
   if (!schema) throw new Error("No schema loaded. Nothing can be served.");
 
-  // TODO: VALIDATE SCHEMA
-
+  let handle = (req, res, next) => {
+    res.status(503).send("Server is still loading.");
+  };
   const server = new OpenApiMocker({
     port: undefined,
-    server: "serverless",
+    server: "express-connector",
   });
   server.setSchema(schema);
 
-  let handle = () => ({
-    status: 503,
-    body: "Mock server is not ready to handle requests",
-  });
-  server
-    .validate()
-    .then(() => {
-      return server.mock();
-    })
-    .then((handler) => (handle = handler));
+  return function connect(app) {
+    app.use((req, res, next) => {
+      handle(req, res, next);
+    });
 
-  /**
-   * @type {serverlessHandler}
-   */
-  const handler = (req) => {
-    return handle(req);
+    server
+      .validate()
+      .then(() => {
+        return server.mock();
+      })
+      .then((connector) => {
+        connector(app);
+        handle = (req, res, next) => {
+          next();
+        };
+      });
   };
-  return handler;
 }
 
-module.exports = createServerlessHandler;
+module.exports = createServerlessApp;

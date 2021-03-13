@@ -15,7 +15,7 @@
   },
   "files": [
     "lib/",
-    "expess-connector.js"
+    "express-connector.js"
   ],
   "keywords": [
     "api",

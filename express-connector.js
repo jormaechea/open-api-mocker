@@ -59,23 +59,30 @@ function createServerlessApp(options) {
   });
   server.setSchema(schema);
 
-  return function connect(app) {
-    app.use((req, res, next) => {
-      handle(req, res, next);
-    });
+  const validating = server.validate();
 
-    server
-      .validate()
-      .then(() => {
-        return server.mock();
-      })
-      .then((connector) => {
-        connector(app);
-        handle = (req, res, next) => {
-          next();
-        };
+  return {
+    get schema() {
+      return server.schema;
+    },
+
+    connect(app) {
+      app.use((req, res, next) => {
+        handle(req, res, next);
       });
-  };
+
+      validating
+          .then(() => {
+            return server.mock();
+          })
+          .then((connector) => {
+            connector(app);
+            handle = (req, res, next) => {
+              return next();
+            };
+          });
+    }
+  }
 }
 
 module.exports = createServerlessApp;

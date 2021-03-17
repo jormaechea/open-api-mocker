@@ -438,7 +438,7 @@ describe('Response Generator', () => {
 
 			const response = ResponseGenerator.generate(responseSchema);
 
-			assert.strictEqual(response, '2000-01-01T00:00:00.000Z');
+			assert.strictEqual(response.toISOString(), '2000-01-01T00:00:00.000Z');
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is ' +

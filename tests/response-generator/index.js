@@ -12,9 +12,7 @@ describe('Response Generator', () => {
 	});
 
 	describe('Generate', () => {
-
-		it('Should return the example if it\'s defined', () => {
-
+		it("Should return the example if it's defined", () => {
 			const responseSchema = {
 				example: {
 					foo: 'bar'
@@ -29,7 +27,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the first example if examples is defined', () => {
-
 			const responseSchema = {
 				examples: {
 					first: {
@@ -48,7 +45,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should throw if examples is defined but example has no value', () => {
-
 			const responseSchema = {
 				examples: {
 					first: {
@@ -60,9 +56,7 @@ describe('Response Generator', () => {
 			assert.throws(() => ResponseGenerator.generate(responseSchema));
 		});
 
-
 		it('Should return the first example if examples is defined & preferred example value undefined', () => {
-
 			const responseSchema = {
 				examples: {
 					first: {
@@ -84,7 +78,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the preferred example if prefer header is set', () => {
-
 			const responseSchema = {
 				examples: {
 					cat: {
@@ -98,7 +91,7 @@ describe('Response Generator', () => {
 						}
 					},
 					dog: {
-						summary: 'An example of a dog with a cat\'s name',
+						summary: "An example of a dog with a cat's name",
 						value: {
 							name: 'Puma',
 							petType: 'Dog',
@@ -121,8 +114,7 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return the schema\'s example if it\'s defined', () => {
-
+		it("Should return the schema's example if it's defined", () => {
 			const responseSchema = {
 				schema: {
 					example: {
@@ -138,13 +130,14 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return the schema\'s first example if examples is defined', () => {
-
+		it("Should return the schema's first example if examples is defined", () => {
 			const responseSchema = {
 				schema: {
-					examples: [{
-						foo: 'bar'
-					}]
+					examples: [
+						{
+							foo: 'bar'
+						}
+					]
 				}
 			};
 
@@ -156,7 +149,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the first enum element if enum is defined', () => {
-
 			const responseSchema = {
 				enum: ['foo', 'bar', 'baz']
 			};
@@ -167,7 +159,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a number if type is defined as number', () => {
-
 			const responseSchema = {
 				type: 'number'
 			};
@@ -178,7 +169,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return an integer if type is defined as integer', () => {
-
 			const responseSchema = {
 				type: 'integer'
 			};
@@ -190,7 +180,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a not-empty array if type is defined as array', () => {
-
 			const responseSchema = {
 				type: 'array',
 				items: {
@@ -206,7 +195,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return an array with specified number of items if type is defined as array and x-count extension is specified', () => {
-
 			const responseSchema = {
 				type: 'array',
 				'x-count': 2,
@@ -221,7 +209,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return an empty object if type is defined as object without any other props', () => {
-
 			const responseSchema = {
 				type: 'object'
 			};
@@ -232,7 +219,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the schema example if type is defined as object with an example property', () => {
-
 			const responseSchema = {
 				type: 'object',
 				example: { foo: 'bar' }
@@ -244,7 +230,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return all schemas merged if the allOf property is defiend', () => {
-
 			const responseSchema = {
 				schema: {
 					allOf: [
@@ -269,7 +254,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the first schema if the oneOf property is defiend', () => {
-
 			const responseSchema = {
 				schema: {
 					oneOf: [
@@ -293,7 +277,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return the first schema if the anyOf property is defiend', () => {
-
 			const responseSchema = {
 				schema: {
 					anyOf: [
@@ -317,7 +300,6 @@ describe('Response Generator', () => {
 		});
 
 		it('Should throw if an invalid type is defined', () => {
-
 			const responseSchema = {
 				type: 'invalidType'
 			};
@@ -326,14 +308,12 @@ describe('Response Generator', () => {
 		});
 
 		it('Should throw if an invalid schema is passed', () => {
-
 			const responseSchema = {};
 
 			assert.throws(() => ResponseGenerator.generate(responseSchema));
 		});
 
 		it('Should return a generated response if a complex schema is defined', () => {
-
 			const responseSchema = {
 				schema: {
 					type: 'object',
@@ -417,7 +397,8 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with value generated using relevant faker method if x-faker extension is ' +
-			'present in and method exists in faker', () => {
+        'present in and method exists in faker',
+		() => {
 			sinon.replace(faker.name, 'firstName', sinon.fake.returns('bob'));
 			const responseSchema = {
 				type: 'string',
@@ -430,7 +411,11 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
-			sinon.replace(faker.date, 'recent', sinon.fake.returns(new Date(2000, 0, 1)));
+			sinon.replace(
+				faker.date,
+				'recent',
+				sinon.fake.returns(new Date(2000, 0, 1))
+			);
 			const responseSchema = {
 				type: 'date-time',
 				'x-faker': 'date.recent'
@@ -442,7 +427,8 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is ' +
-			'present but method does not exist in faker', () => {
+        'present but method does not exist in faker',
+		() => {
 			const responseSchema = {
 				type: 'string',
 				'x-faker': 'idonotexist'
@@ -453,6 +439,68 @@ describe('Response Generator', () => {
 			assert.strictEqual(response, 'string');
 		});
 
-	});
+		it('Should return a generated response with string value built using composite faker methods if ' +
+        'x-faker extension includes mustache template string',
+		() => {
+			sinon
+				.stub(faker.random, 'number')
+				.onFirstCall()
+				.returns(1)
+				.onSecondCall()
+				.returns(2);
+			const responseSchema = {
+				type: 'string',
+				'x-faker': '{{random.number}}+{{random.number}}'
+			};
 
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, '1+2');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field is not in the namespace.method format', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'random'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field contains an invalid faker namespace', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'randum.number'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field contains an invalid faker method', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'random.numbr'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with value from faker when x-faker extension contains valid faker namespace, method and arguments', () => {
+			sinon.stub(faker.random, 'number').returns(1);
+			const responseSchema = {
+				type: 'integer',
+				'x-faker': 'random.number({ "max": 5 })'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 1);
+		});
+	});
 });

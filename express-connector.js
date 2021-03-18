@@ -5,19 +5,12 @@ const chokidar = require("chokidar");
 
 const logger = require("lllog")();
 
-let prev;
 function loadSchemaFromDisk(schemaPath) {
   logger.debug(`Reading schema from ${schemaPath}`);
 
   // TODO: MOVE TO COMMON CODE
   if (schemaPath.match(/\.ya?ml$/)) {
-    const contents = YAML.load(fs.readFileSync(schemaPath));
-    if (prev) {
-      console.log("File contents are the same?", contents === prev);
-    }
-
-    prev = contents;
-    return contents;
+    return YAML.load(fs.readFileSync(schemaPath));
   }
 
   delete require.cache[require.resolve(schemaPath)];
@@ -28,8 +21,14 @@ function notReadyHandler(req, res) {
   res.status(503).send("Server is still loading.");
 }
 
+function createInvalidSchemaHandler(error) {
+  return function invalidSchemaHandler(req, res) {
+    res.status(502).send("The loaded schema is invalid:\n" + error.message);
+  };
+}
+
 /**
- * A function that must be called by the handler of the platform specific serveless function
+ * A function that must be called by the handler of the platform specific serverless function
  * @callback RequestHandler
  * @param {Object} req
  * @param {Object} res
@@ -69,38 +68,47 @@ function connector(options) {
   let validating;
   let handle = notReadyHandler;
   let connectedApp;
+  let isSchemaValid = false;
   const server = new OpenApiMocker({
     port: undefined,
     server: "express-connector",
   });
 
   function connectToApp() {
-    validating
-      .then(() => {
-        return server.mock();
-      })
-      .then((connector) => {
-        connector(connectedApp);
-        handle = (req, res, next) => {
-          return next();
-        };
-      });
+    return validating.then(async () => {
+      if (!isSchemaValid) return;
+
+      const connect = await server.mock();
+      connect(connectedApp);
+      handle = (req, res, next) => {
+        return next();
+      };
+    });
   }
 
   function load() {
     let schema = options.schema;
     if (!schema && schemaPath) schema = loadSchemaFromDisk(schemaPath);
-
     if (!schema) throw new Error("No schema loaded. Nothing can be served.");
 
     handle = notReadyHandler;
 
     server.setSchema(schema);
-    validating = server.validate();
+    validating = server
+      .validate()
+      .then(() => {
+        isSchemaValid = true;
+      })
+      .catch((e) => {
+        isSchemaValid = false;
+        console.error("Schema is invalid:", e.message);
+        handle = createInvalidSchemaHandler(e);
+      });
 
     if (connected) {
       return connectToApp();
     }
+    return validating;
   }
 
   if (watch) {

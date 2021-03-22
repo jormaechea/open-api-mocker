@@ -107,11 +107,11 @@ The _x-faker_ extension accepts values in 3 forms:
 2. _fakerNamespace.method({ "methodArgs": "in", "json": "format" })_. e.g. `random.number({ "max": 100 })`
 3. A mustache template string making use of the 2 forms above. e.g. `My name is {{name.firstName}} {{name.lastName}}`
 
-*NOTE*: To avoid new fake data from being generated on every call, up to 10 responses per endpoint is cached 
-that is based on the incoming query string, request body and headers.
+*NOTE*: To avoid new fake data from being generated on every call, up to 10 responses per endpoint are cached 
+based on the incoming query string, request body and headers.
 
 ### x-count
-The _x-count_ extension only as affect when used on a `array` type property.
+The _x-count_ extension has effect only when used on an `array` type property.
 If encountered, OpenAPI Mocker will return an array with the given number of elements instead of the default of an 
 array with a single item.
 

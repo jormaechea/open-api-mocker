@@ -418,7 +418,7 @@ describe('Response Generator', () => {
 
 		it('Should return a generated response with value generated using relevant faker method if x-faker extension is ' +
 			'present in and method exists in faker', () => {
-			sinon.replace(faker.name, 'firstName', sinon.fake.returns('bob'));
+			sinon.stub(faker.name, 'firstName').returns('bob');
 			const responseSchema = {
 				type: 'string',
 				'x-faker': 'name.firstName'
@@ -430,7 +430,7 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
-			sinon.replace(faker.date, 'recent', sinon.fake.returns(new Date(2000, 0, 1)));
+			sinon.stub(faker.date, 'recent').returns(new Date(2000, 0, 1));
 			const responseSchema = {
 				type: 'date-time',
 				'x-faker': 'date.recent'

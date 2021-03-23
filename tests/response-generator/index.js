@@ -1,10 +1,15 @@
 'use strict';
 
 const assert = require('assert');
+const faker = require('faker');
+const sinon = require('sinon');
 
 const ResponseGenerator = require('../../lib/response-generator');
 
 describe('Response Generator', () => {
+	beforeEach(() => {
+		sinon.restore();
+	});
 
 	describe('Generate', () => {
 
@@ -198,6 +203,21 @@ describe('Response Generator', () => {
 			assert.strictEqual(typeof response, 'object');
 			assert.ok(Array.isArray(response));
 			assert.strictEqual(response[0], response[0] | 1);
+		});
+
+		it('Should return an array with specified number of items if type is defined as array and x-count extension is specified', () => {
+
+			const responseSchema = {
+				type: 'array',
+				'x-count': 2,
+				items: {
+					type: 'integer'
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, [1, 1]);
 		});
 
 		it('Should return an empty object if type is defined as object without any other props', () => {
@@ -396,6 +416,105 @@ describe('Response Generator', () => {
 			});
 		});
 
-	});
+		it('Should return a generated response with value generated using relevant faker method if x-faker extension is ' +
+			'present in and method exists in faker', () => {
+			sinon.stub(faker.name, 'firstName').returns('bob');
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'name.firstName'
+			};
 
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'bob');
+		});
+
+		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
+			sinon.stub(faker.date, 'recent').returns(new Date(2000, 0, 1));
+			const responseSchema = {
+				type: 'date-time',
+				'x-faker': 'date.recent'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response.toISOString(), '2000-01-01T00:00:00.000Z');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field is ' +
+			'present but method does not exist in faker', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'idonotexist'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with string value built using composite faker methods if ' +
+        'x-faker extension includes mustache template string',
+		() => {
+			sinon
+				.stub(faker.random, 'number')
+				.onFirstCall()
+				.returns(1)
+				.onSecondCall()
+				.returns(2);
+			const responseSchema = {
+				type: 'string',
+				'x-faker': '{{random.number}}+{{random.number}}'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, '1+2');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field is not in the namespace.method format', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'random'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field contains an invalid faker namespace', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'randum.number'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with standard primitive value if x-faker field contains an invalid faker method', () => {
+			const responseSchema = {
+				type: 'string',
+				'x-faker': 'random.numbr'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'string');
+		});
+
+		it('Should return a generated response with value from faker when x-faker extension contains valid faker namespace, method and arguments', () => {
+			sinon.stub(faker.random, 'number').returns(1);
+			const responseSchema = {
+				type: 'integer',
+				'x-faker': 'random.number({ "max": 5 })'
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 1);
+		});
+	});
 });

@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2021-03-23
+### Added
+- `x-faker` extension is now supported for response generation
+- `x-count` extension is now supported for responses with array types
+- Added support for more formats defined in the OpenAPI specs
+
+### Changed
+- Unknown formats don't throw errors any more
+
+### Fixed
+- `Prefer` header with statusCode now works properly again
+- Git hooks are now run again with `husky@4`
+- Tests now run properly when local timezone is not UTC
+
 ## [1.5.1] - 2021-02-12
 ### Fixed
 - Removed CI/CD for node 8

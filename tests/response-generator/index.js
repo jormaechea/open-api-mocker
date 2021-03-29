@@ -438,7 +438,7 @@ describe('Response Generator', () => {
 
 			const response = ResponseGenerator.generate(responseSchema);
 
-			assert.strictEqual(response.toISOString(), '2000-01-01T00:00:00.000Z');
+			assert.strictEqual(response.toDateString(), 'Sat Jan 01 2000');
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is ' +
@@ -515,6 +515,18 @@ describe('Response Generator', () => {
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 1);
+		});
+
+		it('Should return one element from list of values from faker when x-faker extension contains valid faker namespace, method and arguments', () => {
+			sinon.stub(faker.random, 'arrayElement').returns('Norway');
+			const responseSchema = {
+				type: 'string',
+				'x-faker': "random.arrayElement(['Norway', 'Norway'])"
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.strictEqual(response, 'Norway');
 		});
 	});
 });

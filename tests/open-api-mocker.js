@@ -40,32 +40,34 @@ describe('Openapi', () => {
 			sandbox.assert.calledOnce(Server.prototype.init);
 		});
 
-		it('Should set the parameters of a passed in server instance', async () => {
-			const server = {
-				setServers: sandbox.stub().returnsThis(),
-				setPort: sandbox.stub().returnsThis(),
-				setPaths: sandbox.stub().returnsThis(),
-				init: sandbox.stub().resolves()
-			};
+		it('Should set the parameters to a custom server if it is passed as option', async () => {
 
-			const openApiMocker = new OpenApiMocker({ server });
+			class CustomServer {
+
+				setServers() { return this; }
+
+				setPort() { return this; }
+
+				setPaths() { return this; }
+
+				init() {}
+			}
+
+			sandbox.spy(CustomServer.prototype, 'setServers');
+			sandbox.spy(CustomServer.prototype, 'setPort');
+			sandbox.spy(CustomServer.prototype, 'setPaths');
+			sandbox.stub(CustomServer.prototype, 'init');
+
+			const openApiMocker = new OpenApiMocker({ server: new CustomServer() });
 			openApiMocker.setSchema(schema);
 
 			await openApiMocker.validate();
 			await openApiMocker.mock();
 
-			sandbox.assert.calledOnce(server.setServers);
-			sandbox.assert.calledOnce(server.setPort);
-			sandbox.assert.calledOnce(server.setPaths);
-			sandbox.assert.calledOnce(server.init);
-		});
-
-		it('should shutdown the server when shutdown is called', async () => {
-			const openApiMocker = new OpenApiMocker({});
-
-			await openApiMocker.shutdown();
-
-			sandbox.assert.calledOnce(Server.prototype.shutdown);
+			sandbox.assert.calledOnce(CustomServer.prototype.setServers);
+			sandbox.assert.calledOnce(CustomServer.prototype.setPort);
+			sandbox.assert.calledOnce(CustomServer.prototype.setPaths);
+			sandbox.assert.calledOnce(CustomServer.prototype.init);
 		});
 
 	});

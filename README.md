@@ -149,6 +149,29 @@ Will produce the following response:
 ]
 ```
 
+## Extending OpenAPI Mocker
+OpenAPI Mocker is open for extension through the use of custom server implementations.  
+A custom server instance can be passed to the constructor of `OpenApiMocker` which is expecting an object that 
+implements the following interface:
+```ts
+interface IOpenApiServer {
+    setServers(serverBlockFromSchema: any): IOpenApiServer;
+    setPort(port: number): IOpenApiServer;
+    setPaths(pathsFromSchema: any): IOpenApiServer;
+    init(): Promise<void>;
+    shutdown(): Promise<void>;
+}
+```
+
+This is then injected in to the `OpenApiMocker` constructor:
+```ts
+const server = new MyCustonServer();
+const mocker = new OpenApiMocker({ server });
+mocker.setSchema(schema);
+await mocker.validate();
+await mocker.mock();
+``` 
+
 ## Tests
 
 Simply run `npm t`

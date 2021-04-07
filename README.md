@@ -42,7 +42,7 @@ docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/op
 - [x] Request parameters validation
 - [x] Request body validation
 - [x] Response body and headers generation based on examples or schemas
-- [x] Response selection using request header: `Prefer: statusCode=XXX` or `Prefer: example=name` 
+- [x] Response selection using request header: `Prefer: statusCode=XXX` or `Prefer: example=name`
 - [x] Request and response logging
 - [x] Servers basepath support
 - [x] Support x-faker and x-count extension methods to customise generated responses
@@ -50,12 +50,12 @@ docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/op
 
 ## Customizing Generated Responses
 The OpenAPI specification allows custom properties to be added to an API definition in the form of _x-*_.
-OpenAPI Mocker supports the use of two custom extensions to allow data to be randomised which should allow for more 
+OpenAPI Mocker supports the use of two custom extensions to allow data to be randomised which should allow for more
 realistic looking data when developing a UI against a mock API for instance.
 
 ### x-faker
-The _x-faker_ extension is valid for use on properties that have a primitive type (e.g. `string`/`integer`, etc.) 
-and can be used within an API definition to use one or more methods from the excellent 
+The _x-faker_ extension is valid for use on properties that have a primitive type (e.g. `string`/`integer`, etc.)
+and can be used within an API definition to use one or more methods from the excellent
 [faker](https://www.npmjs.com/package/faker) library for generating random data.
 
 Given the following API definition:
@@ -89,8 +89,8 @@ paths:
                   age:
                     type: string
                     x-faker: 'random.number({ "min": 1, "max": 20 })'
-                  
-``` 
+
+```
 
 A JSON response similar to the following would be produced:
 ```JSON
@@ -107,12 +107,12 @@ The _x-faker_ extension accepts values in 3 forms:
 2. _fakerNamespace.method({ "methodArgs": "in", "json": "format" })_. e.g. `random.number({ "max": 100 })`
 3. A mustache template string making use of the 2 forms above. e.g. `My name is {{name.firstName}} {{name.lastName}}`
 
-*NOTE*: To avoid new fake data from being generated on every call, up to 10 responses per endpoint are cached 
+*NOTE*: To avoid new fake data from being generated on every call, up to 10 responses per endpoint are cached
 based on the incoming query string, request body and headers.
 
 ### x-count
 The _x-count_ extension has effect only when used on an `array` type property.
-If encountered, OpenAPI Mocker will return an array with the given number of elements instead of the default of an 
+If encountered, OpenAPI Mocker will return an array with the given number of elements instead of the default of an
 array with a single item.
 
 For example, the following API definition:
@@ -149,28 +149,9 @@ Will produce the following response:
 ]
 ```
 
-## Extending OpenAPI Mocker
-OpenAPI Mocker is open for extension through the use of custom server implementations.  
-A custom server instance can be passed to the constructor of `OpenApiMocker` which is expecting an object that 
-implements the following interface:
-```ts
-interface IOpenApiServer {
-    setServers(serverBlockFromSchema: any): IOpenApiServer;
-    setPort(port: number): IOpenApiServer;
-    setPaths(pathsFromSchema: any): IOpenApiServer;
-    init(): Promise<void>;
-    shutdown(): Promise<void>;
-}
-```
+## Advanced usage
 
-This is then injected in to the `OpenApiMocker` constructor:
-```ts
-const server = new MyCustonServer();
-const mocker = new OpenApiMocker({ server });
-mocker.setSchema(schema);
-await mocker.validate();
-await mocker.mock();
-``` 
+See the [advanced usage docs](docs/README.md) to extend or build your own app upon OpenAPI Mocker.
 
 ## Tests
 

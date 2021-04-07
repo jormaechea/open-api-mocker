@@ -6,12 +6,22 @@ Normally, you will use OpenAPI Mocker from the CLI or via Docker. But in case yo
 
 ```js
 const OpenApiMocker = require('open-api-mocker');
-const mocker = new OpenApiMocker({
-	schema: yourSchema // This can be the path to the schema JSON/YAML file or an OpenAPI schema object. This is optional, you can also call mocker.setSchema(yourSchema) later
-});
+const mocker = new OpenApiMocker(options);
 await mocker.validate();
 await mocker.mock();
 ```
+
+#### Available options
+
+The following table shows the options that can be passed to the constructor:
+
+| Option | Description | Default value |
+| ------ | ----------- | ------------- |
+| port | The port the default server will listen to. | `5000` |
+| schema | The OpenAPI schema to be mocked. It can be a `string` with the path to the schema or an `object` containing the schema. It can also be set using the `setSchema()` method. | `null` |
+| watch | Whether or not the schema should be watched for changes. | `false` |
+| server | An instance of a Server implementation. See details [below](#custom-server). | `null`, which means that the built-in server will be used |
+| schemaLoader | A SchemaLoader class. See details [below](#custom-schema-loader). | `null`, which means that one of the built-in loaders will be used |
 
 ## Extending OpenAPI Mocker features
 

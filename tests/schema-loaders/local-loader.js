@@ -168,5 +168,37 @@ describe('Schema Loaders', () => {
 
 		});
 
+		describe('unwatch()', () => {
+
+			const chokidarEmitter = new EventEmitter();
+
+			beforeEach(() => {
+				sinon.stub(LocalSchemaLoader.prototype, 'load').returns({ foo: 'bar' });
+				chokidarEmitter.unwatch = sinon.fake();
+				sinon.stub(chokidar, 'watch').returns(chokidarEmitter);
+			});
+
+			afterEach(() => sinon.restore());
+
+			const fakePath = 'path/to/schema.yaml';
+
+			it('Should not unwatch if watch was not called previously', async () => {
+
+				const schemaLoader = new LocalSchemaLoader(fakePath);
+				schemaLoader.unwatch();
+
+				sinon.assert.notCalled(chokidarEmitter.unwatch);
+			});
+
+			it('Should unwatch chokidar if watch was called previously', async () => {
+
+				const schemaLoader = new LocalSchemaLoader(fakePath);
+				schemaLoader.watch();
+				schemaLoader.unwatch();
+
+				sinon.assert.calledOnce(chokidarEmitter.unwatch);
+			});
+		});
+
 	});
 });

@@ -64,7 +64,7 @@ interface OpenApiSchemaLoader extends EventEmitter {
 }
 ```
 
-If you want your schema loader to support the watch feature, you have to implement the `watch(): void` method, which will be called once and **must** emit the `schema-changed` event each time you detect a change in the watched schema like this: `this.emit('schema-changed', newSchema);`.
+If you want your schema loader to support the watch feature, you have to implement the `watch(): void` method, which will be called once and **must** emit the `schema-changed` event each time you detect a change in the watched schema like this: `this.emit('schema-changed');`.
 
 Once you have your schema loader implemented, you have to pass the class in the constructor:
 

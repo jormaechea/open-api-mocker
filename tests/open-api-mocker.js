@@ -261,7 +261,7 @@ describe('OpenAPI Mocker', () => {
 
 				class CustomSchemaLoaderWithRealWatch extends CustomSchemaLoader {
 					watch() {
-						setTimeout(() => this.emit('schema-changed', newSchema), 1000);
+						setTimeout(() => this.emit('schema-changed'), 1000);
 					}
 				}
 
@@ -269,6 +269,9 @@ describe('OpenAPI Mocker', () => {
 				sinon.spy(OpenApiMocker.prototype, 'setSchema');
 				sinon.spy(OpenApiMocker.prototype, 'validate');
 				sinon.spy(OpenApiMocker.prototype, 'mock');
+				const loadStub = sinon.stub(CustomSchemaLoaderWithRealWatch.prototype, 'load');
+				loadStub.onCall(0).returns(schema);
+				loadStub.onCall(1).returns(newSchema);
 
 				const openApiMocker = new OpenApiMocker({
 					schemaLoader: CustomSchemaLoaderWithRealWatch,
@@ -280,6 +283,7 @@ describe('OpenAPI Mocker', () => {
 				await openApiMocker.mock();
 
 				sinon.assert.calledOnceWithExactly(OpenApiMocker.prototype.setSchema, schema);
+				sinon.assert.calledOnce(CustomSchemaLoaderWithRealWatch.prototype.load);
 				sinon.assert.calledOnce(OpenApiMocker.prototype.validate);
 				sinon.assert.calledOnce(OpenApiMocker.prototype.mock);
 
@@ -287,7 +291,8 @@ describe('OpenAPI Mocker', () => {
 				await clock.tickAsync(1000);
 
 				sinon.assert.calledTwice(OpenApiMocker.prototype.setSchema);
-				sinon.assert.calledWithExactly(OpenApiMocker.prototype.setSchema.getCall(1), newSchema);
+				sinon.assert.calledWithExactly(OpenApiMocker.prototype.setSchema.getCall(1), schema);
+				sinon.assert.calledTwice(CustomSchemaLoaderWithRealWatch.prototype.load);
 				sinon.assert.calledTwice(OpenApiMocker.prototype.validate);
 				sinon.assert.calledTwice(OpenApiMocker.prototype.mock);
 			});

@@ -155,19 +155,15 @@ describe('Schema Loaders', () => {
 
 				// Should emit after 100ms
 				sinon.assert.calledOnce(changeCallback);
-				sinon.assert.calledWithExactly(changeCallback.getCall(0), { foo: 'bar' });
 
 				// And now test consecutive calls
 				chokidarEmitter.emit('change');
 				clock.tick(100);
 				sinon.assert.calledTwice(changeCallback);
-				sinon.assert.calledWithExactly(changeCallback.getCall(1), { foo: 'bar2' });
 
 				chokidarEmitter.emit('change');
 				clock.tick(100);
 				sinon.assert.calledThrice(changeCallback);
-				sinon.assert.calledWithExactly(changeCallback.getCall(2), { foo: 'bar3' });
-
 			});
 
 		});

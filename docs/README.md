@@ -66,6 +66,10 @@ interface OpenApiSchemaLoader extends EventEmitter {
 
 If you want your schema loader to support the watch feature, you have to implement the `watch(): void` method, which will be called once and **must** emit the `schema-changed` event each time you detect a change in the watched schema like this: `this.emit('schema-changed');`.
 
+You can also implement a `unwatch(): void` method in case you need to do some clean-up of the watch feature, such as event listeners, intervals, polling processes, etc.
+
+Each time you trigger the `schema-changed` event, OpenAPI Mocker will invoke your `unwatch()` method if it's defined and then the `load()` method to get the new schema.
+
 Once you have your schema loader implemented, you have to pass the class in the constructor:
 
 ```js

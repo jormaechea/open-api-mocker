@@ -263,6 +263,28 @@ describe('OpenAPI Mocker', () => {
 				sinon.assert.calledTwice(ExplicitSchemaLoader.prototype.load);
 			});
 
+			it('Should remove listeners but not unwatch if watch option is passed but schema loader does not support watch', async () => {
+
+				const openApiMocker = new OpenApiMocker({
+					schema,
+					watch: true
+				});
+
+				await openApiMocker.validate();
+				await openApiMocker.mock();
+
+				sinon.assert.notCalled(ExplicitSchemaLoader.prototype.removeAllListeners);
+
+				openApiMocker.setSchema(schema);
+
+				// Tick the clock and wait for the event loop to be empty
+				await clock.tickAsync(1000);
+
+				sinon.assert.calledOnce(ExplicitSchemaLoader.prototype.removeAllListeners);
+
+				sinon.assert.calledTwice(ExplicitSchemaLoader.prototype.load);
+			});
+
 			it('Should remove listeners and unwatch if watch option is not passed', async () => {
 
 				const openApiMocker = new OpenApiMocker({

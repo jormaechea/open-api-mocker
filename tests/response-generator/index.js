@@ -316,6 +316,15 @@ describe('Response Generator', () => {
 			});
 		});
 
+		it('Should return empty response in case of empty response schema', () => {
+
+			const responseSchema = {};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, null);
+		});
+
 		it('Should throw if an invalid type is defined', () => {
 
 			const responseSchema = {
@@ -327,7 +336,7 @@ describe('Response Generator', () => {
 
 		it('Should throw if an invalid schema is passed', () => {
 
-			const responseSchema = {};
+			const responseSchema = { abc: 'xyz' };
 
 			assert.throws(() => ResponseGenerator.generate(responseSchema));
 		});

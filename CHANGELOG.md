@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Support empty response.
 - `quiet` (alias `q`) option to avoid printing every request and response
 
 ### Fixed

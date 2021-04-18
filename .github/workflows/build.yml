@@ -6,11 +6,6 @@ on:
       - master
     tags:
       - '!*' # Do not execute on tags
-    paths:
-      - lib/*
-      - test/*
-      - '*.json'
-      - package-lock.json
   pull_request:
     paths:
       - '!*.MD'

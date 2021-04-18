@@ -61,7 +61,7 @@ jobs:
       run: npm install
     - uses: paambaati/codeclimate-action@v2.7.5
       env:
-        CC_TEST_REPORTER_ID: ${{secrets.GITHUB_TOKEN}}
+        CC_TEST_REPORTER_ID: ${{secrets.CODE_CLIMATE_TEST_REPORTER_ID}}
       with:
         coverageCommand: npm run coverage:ci
         coverageLocations: |

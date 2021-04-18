@@ -9,8 +9,7 @@
   "scripts": {
     "lint": "eslint ./lib ./tests",
     "test": "mocha -R nyan --recursive --require tests/bootstrap.js tests/",
-    "test:ci": "nyc --reporter=lcov mocha --recursive tests/",
-    "coverage:ci": "nyc report --reporter=text-lcov",
+    "coverage:ci": "nyc --reporter=lcov mocha --recursive tests/",
     "coverage": "nyc npm test"
   },
   "files": [

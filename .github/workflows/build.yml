@@ -59,8 +59,10 @@ jobs:
         node-version: '12'
     - name: Install dependencies
       run: npm install
-    - uses: paambaati/codeclimate-action@v2.2.4
+    - uses: paambaati/codeclimate-action@v2.7.5
       env:
         CC_TEST_REPORTER_ID: ${{secrets.GITHUB_TOKEN}}
       with:
         coverageCommand: npm run coverage:ci
+        coverageLocations: |
+          ${{github.workspace}}/coverage/lcov.info:lcov

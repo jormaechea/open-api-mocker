@@ -1,6 +1,6 @@
 # OpenAPI Mocker
 
-![Build Status](https://github.com/jormaechea/open-api-mocker/workflows/Build%20Status/badge.svg)
+![Build Status](https://github.com/jormaechea/open-api-mocker/workflows/build/badge.svg)
 [![npm version](https://badge.fury.io/js/open-api-mocker.svg)](https://www.npmjs.com/package/open-api-mocker)
 [![Maintainability](https://api.codeclimate.com/v1/badges/79f6eca7ea3f8fe554c2/maintainability)](https://codeclimate.com/github/jormaechea/open-api-mocker/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/79f6eca7ea3f8fe554c2/test_coverage)](https://codeclimate.com/github/jormaechea/open-api-mocker/test_coverage)

@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    paths:
+      - '!*.MD'
+
+jobs:
+  test:
+    name: Test in node ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{matrix.node-version}}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test
+
+  lint:
+    name: Lint code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: npm install
+      - name: Lint code
+        run: npm run lint
+
+  coverage:
+    needs:
+      - test
+    name: Upload coverage to CodeClimate
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - name: Install dependencies
+      run: npm install
+    - uses: paambaati/codeclimate-action@v2.7.5
+      env:
+        CC_TEST_REPORTER_ID: ${{secrets.CODE_CLIMATE_TEST_REPORTER_ID}}
+      with:
+        coverageCommand: npm run coverage:ci
+        coverageLocations: |
+          ${{github.workspace}}/coverage/lcov.info:lcov

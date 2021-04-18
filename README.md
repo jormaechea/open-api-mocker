@@ -1,7 +1,10 @@
 # OpenAPI Mocker
 
-[![Build Status](https://travis-ci.org/jormaechea/open-api-mocker.svg?branch=master)](https://travis-ci.org/jormaechea/open-api-mocker)
-[![Coverage Status](https://coveralls.io/repos/github/jormaechea/open-api-mocker/badge.svg?branch=master)](https://coveralls.io/github/jormaechea/open-api-mocker?branch=master)
+![Build Status](https://github.com/jormaechea/open-api-mocker/workflows/build/badge.svg)
+[![npm version](https://badge.fury.io/js/open-api-mocker.svg)](https://www.npmjs.com/package/open-api-mocker)
+[![Maintainability](https://api.codeclimate.com/v1/badges/79f6eca7ea3f8fe554c2/maintainability)](https://codeclimate.com/github/jormaechea/open-api-mocker/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/79f6eca7ea3f8fe554c2/test_coverage)](https://codeclimate.com/github/jormaechea/open-api-mocker/test_coverage)
+[![Docker compatible](https://img.shields.io/badge/docker-compatible-green)](https://hub.docker.com/repository/docker/jormaechea/open-api-mocker)
 
 An API mocker based in the OpenAPI 3.0 specification.
 

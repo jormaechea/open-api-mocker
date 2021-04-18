@@ -7,8 +7,8 @@ on:
     tags:
       - '!*' # Do not execute on tags
   pull_request:
-    paths:
-      - '!*.MD'
+    branches:
+      - '**'
 
 jobs:
   test:

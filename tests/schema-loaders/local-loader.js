@@ -30,8 +30,8 @@ describe('Schema Loaders', () => {
 			it('Should throw if the schema does not exist', () => {
 				fs.accessSync.throws(new Error('File not found'));
 
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				assert.throws(() => schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.throws(() => schemaLoader.load(fakePath), {
 					name: 'OpenAPISchemaNotFound'
 				});
 
@@ -42,8 +42,8 @@ describe('Schema Loaders', () => {
 			it('Should throw if the schema fails to be read', () => {
 				fs.readFileSync.throws(new Error('File could not be read'));
 
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				assert.throws(() => schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.throws(() => schemaLoader.load(fakePath), {
 					name: 'OpenAPISchemaMalformed'
 				});
 
@@ -54,8 +54,8 @@ describe('Schema Loaders', () => {
 			it('Should throw if the schema is not a valid YAML', () => {
 				fs.readFileSync.returns('>>');
 
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				assert.throws(() => schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.throws(() => schemaLoader.load(fakePath), {
 					name: 'OpenAPISchemaMalformed'
 				});
 
@@ -66,8 +66,8 @@ describe('Schema Loaders', () => {
 			it('Should return the schema if it is a valid YAML', () => {
 				fs.readFileSync.returns('foo: bar');
 
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				assert.deepStrictEqual(schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.deepStrictEqual(schemaLoader.load(fakePath), {
 					foo: 'bar'
 				});
 
@@ -78,8 +78,8 @@ describe('Schema Loaders', () => {
 			it('Should throw if the schema is not a valid JSON', () => {
 				fs.readFileSync.returns('>>');
 
-				const schemaLoader = new LocalSchemaLoader(changeYamlToJson(fakePath));
-				assert.throws(() => schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.throws(() => schemaLoader.load(changeYamlToJson(fakePath)), {
 					name: 'OpenAPISchemaMalformed'
 				});
 
@@ -90,8 +90,8 @@ describe('Schema Loaders', () => {
 			it('Should return the schema if it is a valid JSON', () => {
 				fs.readFileSync.returns('{"foo": "bar"}');
 
-				const schemaLoader = new LocalSchemaLoader(changeYamlToJson(fakePath));
-				assert.deepStrictEqual(schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.deepStrictEqual(schemaLoader.load(changeYamlToJson(fakePath)), {
 					foo: 'bar'
 				});
 
@@ -102,8 +102,8 @@ describe('Schema Loaders', () => {
 			it('Should handle an absolute schema properly', () => {
 				fs.readFileSync.returns('foo: bar');
 
-				const schemaLoader = new LocalSchemaLoader(fakeFullPath);
-				assert.deepStrictEqual(schemaLoader.load(), {
+				const schemaLoader = new LocalSchemaLoader();
+				assert.deepStrictEqual(schemaLoader.load(fakeFullPath), {
 					foo: 'bar'
 				});
 
@@ -125,8 +125,6 @@ describe('Schema Loaders', () => {
 
 			afterEach(() => sinon.restore());
 
-			const fakePath = 'path/to/schema.yaml';
-
 			it('Should emit the schema-changed event each time the schema changes', () => {
 
 				LocalSchemaLoader.prototype.load.onCall(0).returns({ foo: 'bar' });
@@ -138,7 +136,7 @@ describe('Schema Loaders', () => {
 
 				const changeCallback = sinon.fake();
 
-				const schemaLoader = new LocalSchemaLoader(fakePath);
+				const schemaLoader = new LocalSchemaLoader();
 				schemaLoader.on('schema-changed', changeCallback);
 
 				schemaLoader.watch();
@@ -166,38 +164,6 @@ describe('Schema Loaders', () => {
 				sinon.assert.calledThrice(changeCallback);
 			});
 
-		});
-
-		describe('unwatch()', () => {
-
-			const chokidarEmitter = new EventEmitter();
-
-			beforeEach(() => {
-				sinon.stub(LocalSchemaLoader.prototype, 'load').returns({ foo: 'bar' });
-				chokidarEmitter.unwatch = sinon.fake();
-				sinon.stub(chokidar, 'watch').returns(chokidarEmitter);
-			});
-
-			afterEach(() => sinon.restore());
-
-			const fakePath = 'path/to/schema.yaml';
-
-			it('Should not unwatch if watch was not called previously', async () => {
-
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				schemaLoader.unwatch();
-
-				sinon.assert.notCalled(chokidarEmitter.unwatch);
-			});
-
-			it('Should unwatch chokidar if watch was called previously', async () => {
-
-				const schemaLoader = new LocalSchemaLoader(fakePath);
-				schemaLoader.watch();
-				schemaLoader.unwatch();
-
-				sinon.assert.calledOnce(chokidarEmitter.unwatch);
-			});
 		});
 
 	});

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Response header `x-powered-by` has now the correct value
+- Schema Object `pattern` property can be passed as a string
 
 ## [1.7.0] - 2021-04-20
 ### Added

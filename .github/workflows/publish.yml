@@ -29,7 +29,7 @@ jobs:
         id: dockermeta
         uses: crazy-max/ghaction-docker-meta@v2
         with:
-          image: jormaechea/open-api-mocker
+          images: jormaechea/open-api-mocker
           tags: |
             type=semver,pattern={{version}}
       - name: Login to Docker Hub

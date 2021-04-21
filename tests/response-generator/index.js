@@ -427,6 +427,8 @@ describe('Response Generator', () => {
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 'bob');
+
+			sinon.assert.calledOnceWithExactly(faker.name.firstName);
 		});
 
 		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
@@ -439,6 +441,8 @@ describe('Response Generator', () => {
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response.toISOString(), '2000-01-01T00:00:00.000Z');
+
+			sinon.assert.calledOnceWithExactly(faker.date.recent);
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is ' +
@@ -470,6 +474,9 @@ describe('Response Generator', () => {
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, '1+2');
+			sinon.assert.calledTwice(faker.random.number);
+			sinon.assert.calledWithExactly(faker.random.number.getCall(0));
+			sinon.assert.calledWithExactly(faker.random.number.getCall(1));
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is not in the namespace.method format', () => {
@@ -515,6 +522,8 @@ describe('Response Generator', () => {
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 1);
+
+			sinon.assert.calledOnceWithExactly(faker.random.number, { max: 5 });
 		});
 	});
 });

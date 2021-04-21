@@ -30,10 +30,10 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",
     "husky": "^4.3.8",
-    "mocha": "^8.3.0",
+    "mocha": "^8.3.2",
     "mock-require": "^3.0.3",
     "nyc": "^15.1.0",
-    "sinon": "^9.2.4"
+    "sinon": "^10.0.0"
   },
   "dependencies": {
     "ajv": "^6.12.6",
@@ -44,13 +44,13 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "faker": "^5.4.0",
-    "js-yaml": "^4.0.0",
+    "faker": "^5.5.3",
+    "js-yaml": "^4.1.0",
     "json-refs": "^3.0.15",
     "lllog": "^1.1.2",
     "micro-memoize": "^4.0.9",
     "parse-prefer-header": "^1.0.0",
-    "superstruct": "~0.6.1",
+    "superstruct": "^0.6.2",
     "yargs": "^16.2.0"
   },
   "directories": {

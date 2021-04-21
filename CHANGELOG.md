@@ -6,10 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- `quiet` (alias `q`) option to avoid printing every request and response
+- `quiet` (alias `q`) option to avoid printing every request and response (#24)
+- CLI: force-quit implemented by pressing `ctrl+c` twice
+- Added support for custom Server implementation for programmatic usage (#22)
+- Added support for custom Schema loader implementation for programmatic usage (#27)
+- Added advanced usage docs
+
+### Changed
+- Schema loading and watch feature moved out of CLI layer
 
 ### Fixed
 - Updated dependencies to fix vulnerabilities
+- Huge refactor to improve code quality and separation of concerns (#26, #27)
 
 ## [1.6.0] - 2021-03-23
 ### Added

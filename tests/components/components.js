@@ -40,6 +40,30 @@ describe('Components', () => {
 			assert.throws(() => parser.parse(schema), ParserError);
 		});
 
+		it('Should not set an schema type if it has the oneOf property set', () => {
+
+			const schema = {
+				components: {
+					schemas: {
+						FooSchema: {
+							type: 'object',
+							properties: {
+								id: {
+									oneOf: [
+										{ type: 'string' },
+										{ type: 'number' }
+									]
+								}
+							}
+						}
+					}
+				}
+			};
+
+			const components = parser.parse(schema);
+			assert.deepStrictEqual(components.schemas.FooSchema.properties.id.type, undefined);
+		});
+
 		it('Should mantain the specification extension properties', () => {
 
 			const schema = {

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Response header `x-powered-by` has now the correct value
 - Schema Object `pattern` property can be passed as a string (#35)
 - Refactor to improve code quality and maintainability (#37)
+- Schemas with `oneOf`, `anyOf` and `allOf` now work properly and don't get wrong default values injected (#41)
 - Dependencies updated to fix vulnerabilities
 
 ## [1.7.0] - 2021-04-20

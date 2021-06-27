@@ -243,7 +243,7 @@ describe('Response Generator', () => {
 			assert.deepStrictEqual(response, { foo: 'bar' });
 		});
 
-		it('Should return all schemas merged if the allOf property is defiend', () => {
+		it('Should return all schemas merged if the allOf property is defined', () => {
 
 			const responseSchema = {
 				schema: {
@@ -268,7 +268,7 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return the first schema if the oneOf property is defiend', () => {
+		it('Should return the first schema if the oneOf property is defined', () => {
 
 			const responseSchema = {
 				schema: {
@@ -292,7 +292,7 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return the first schema if the anyOf property is defiend', () => {
+		it('Should return the first schema if the anyOf property is defined', () => {
 
 			const responseSchema = {
 				schema: {
@@ -314,6 +314,33 @@ describe('Response Generator', () => {
 			assert.deepStrictEqual(response, {
 				foo: 'bar'
 			});
+		});
+
+		it('Should return the first schema if the anyOf property is defined as array items schema', () => {
+
+			const responseSchema = {
+				schema: {
+					type: 'array',
+					items: {
+						anyOf: [
+							{
+								type: 'object',
+								example: { foo: 'bar' }
+							},
+							{
+								type: 'object',
+								example: { baz: 'yeah' }
+							}
+						]
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, [{
+				foo: 'bar'
+			}]);
 		});
 
 		it('Should throw if an invalid type is defined', () => {

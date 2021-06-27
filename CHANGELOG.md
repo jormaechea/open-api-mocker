@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.2] - 2021-06-27
+### Fixed
+- In some cases `oneOf`, `anyOf` and `allOf` schemas reported an error that wasn't real. This doesn't happen any more
+- Response handling had an error since last release, which has now been fixed.
+
 ## [1.7.1] - 2021-06-22
 ### Fixed
 - Response header `x-powered-by` has now the correct value

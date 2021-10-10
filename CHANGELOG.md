@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2021-10-10
+### Changed
+- Now responses with enums pick a random element from the `enum` array
+- Now JSON request bodies can handle up to 10mb
+
+### Fixed
+- Dependencies updated to fix vulnerabilities
+
 ## [1.7.2] - 2021-06-27
 ### Fixed
 - In some cases `oneOf`, `anyOf` and `allOf` schemas reported an error that wasn't real. This doesn't happen any more

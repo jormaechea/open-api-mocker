@@ -155,7 +155,7 @@ describe('Response Generator', () => {
 			});
 		});
 
-		it('Should return the first enum element if enum is defined', () => {
+		it('Should return the an element from the enum if enum is defined', () => {
 
 			const responseSchema = {
 				enum: ['foo', 'bar', 'baz']
@@ -163,7 +163,7 @@ describe('Response Generator', () => {
 
 			const response = ResponseGenerator.generate(responseSchema);
 
-			assert.strictEqual(response, 'foo');
+			assert(['foo', 'bar', 'baz'].includes(response));
 		});
 
 		it('Should return a number if type is defined as number', () => {
@@ -427,13 +427,13 @@ describe('Response Generator', () => {
 
 			const response = ResponseGenerator.generate(responseSchema);
 
-			assert.deepStrictEqual(response, {
+			sinon.assert.match(response, {
 				foo: 'string',
 				bar: [1],
 				baz: true,
 				yeah: {
 					test1: 'Hi',
-					test2: [10]
+					test2: [sinon.match.in([10, 20, 30])]
 				},
 				employee: {
 					name: 'John',

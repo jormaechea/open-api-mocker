@@ -60,7 +60,6 @@ describe('Response Generator', () => {
 			assert.throws(() => ResponseGenerator.generate(responseSchema));
 		});
 
-
 		it('Should return the first example if examples is defined & preferred example value undefined', () => {
 
 			const responseSchema = {

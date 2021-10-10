@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 'use strict';
 
 const assert = require('assert');
@@ -10,7 +12,7 @@ const YAML = require('js-yaml');
 const schema = YAML.load(fs.readFileSync('./tests/resources/pet-store.yml'));
 
 const OpenApiMocker = require('../lib/open-api-mocker');
-const Server = require('../lib/mocker/express/server.js');
+const Server = require('../lib/mocker/express/server');
 const ExplicitSchemaLoader = require('../lib/schema-loaders/explicit-loader');
 const LocalSchemaLoader = require('../lib/schema-loaders/local-loader');
 

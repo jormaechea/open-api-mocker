@@ -458,7 +458,7 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
-			sinon.stub(faker.date, 'recent').returns(new Date(2000, 0, 1));
+			sinon.stub(faker.date, 'recent').returns(new Date(Date.UTC(2000, 0, 1)));
 			const responseSchema = {
 				type: 'date-time',
 				'x-faker': 'date.recent'

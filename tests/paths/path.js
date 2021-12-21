@@ -1799,7 +1799,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					hello: 'world'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -1835,7 +1836,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					goodbye: 'yellow brick road'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -1871,7 +1873,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					hello: 'world'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -1912,7 +1915,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					message: 'Unauthorized'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -1962,7 +1966,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					message: 'Unauthorized - token expired'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -2003,7 +2008,8 @@ describe('Paths', () => {
 				headers: undefined,
 				body: {
 					hello: 'world'
-				}
+				},
+				responseMimeType: 'application/json'
 			});
 		});
 
@@ -2035,7 +2041,8 @@ describe('Paths', () => {
 			assert.deepStrictEqual(response, {
 				statusCode: 401,
 				headers: undefined,
-				body: null
+				body: null,
+				responseMimeType: undefined
 			});
 		});
 
@@ -2067,7 +2074,8 @@ describe('Paths', () => {
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
 				headers: undefined,
-				body: null
+				body: null,
+				responseMimeType: undefined
 			});
 		});
 
@@ -2115,7 +2123,36 @@ describe('Paths', () => {
 				},
 				body: {
 					hello: 'world'
+				},
+				responseMimeType: 'application/json'
+			});
+		});
+
+		it('Should return a different response mime type if its defined', () => {
+
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'text/plain': {
+								example: 'hello world'
+							}
+						}
+					}
 				}
+			});
+
+			const response = path.getResponse();
+
+			assert.deepStrictEqual(response, {
+				statusCode: 200,
+				headers: undefined,
+				body: 'hello world',
+				responseMimeType: 'text/plain'
 			});
 		});
 	});

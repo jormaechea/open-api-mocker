@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.9.0] - 2021-12-20
 ### Added
-- Response handling for different mime types
+- Response handling for different mime types (#48)
 
 ### Changed
 - Now `x-faker` extension takes precedence in response generation (#53)

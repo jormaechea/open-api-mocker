@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Now `x-faker` extension takes precedence in response generation (#53)
+
+### Fixed
+- Faker now locale selection now works as expected (#50, #54)
 
 ## [1.8.0] - 2021-10-10
 ### Changed

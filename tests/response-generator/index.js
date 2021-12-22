@@ -137,6 +137,27 @@ describe('Response Generator', () => {
 			});
 		});
 
+		it('Should return null if the schema\'s example if is defined as null', () => {
+
+			const responseSchema = {
+				schema: {
+					type: 'object',
+					properties: {
+						foo: {
+							type: 'string',
+							example: null
+						}
+					}
+				}
+			};
+
+			const response = ResponseGenerator.generate(responseSchema);
+
+			assert.deepStrictEqual(response, {
+				foo: null
+			});
+		});
+
 		it('Should return the schema\'s first example if examples is defined', () => {
 
 			const responseSchema = {

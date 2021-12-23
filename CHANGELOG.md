@@ -5,8 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.10.0] - 2021-12-22
 ### Added
-- `null` examples are now allowed and used for response generation
+- `null` examples are now allowed and used for response generation (#49)
 
 ## [1.9.0] - 2021-12-20
 ### Added

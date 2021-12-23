@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 2021-12-23
+### Added
+- Faker locale validation to avoid setting an invalid locale
+
+### Fixed
+- Locales without country modifier now work properly (solves docker error with faker) (#55)
+
 ## [1.10.0] - 2021-12-22
 ### Added
 - `null` examples are now allowed and used for response generation (#49)

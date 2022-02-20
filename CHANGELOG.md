@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.1] - 2022-02-20
+### Fixed
+- Responses that are just a number are now properly generated (#56)
+
 ## [1.11.0] - 2021-12-23
 ### Added
 - Faker locale validation to avoid setting an invalid locale

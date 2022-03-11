@@ -11,7 +11,7 @@
     "test": "mocha -R nyan --recursive --require tests/bootstrap.js tests/",
     "coverage:ci": "nyc --reporter=lcov mocha --recursive tests/",
     "coverage": "nyc npm test",
-    "debug": "npm link && open-api-mocker -s swagger.json -w"
+    "debug": "npm link && open-api-mocker -s petstore.yaml -w -p 5001"
   },
   "files": [
     "lib/"

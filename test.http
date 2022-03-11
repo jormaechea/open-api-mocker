@@ -1,0 +1,2 @@
+GET http://localhost:5001/v1/pets/1
+Prefer: statusCode=500

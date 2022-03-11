@@ -1,2 +1,3 @@
 GET http://localhost:5001/v1/pets/1
-Prefer: statusCode=500
+Prefer: statusCode=500, statusCodeRate=50
+Prefer: latency=500, latencyRate=50

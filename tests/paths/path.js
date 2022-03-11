@@ -1770,9 +1770,9 @@ describe('Paths', () => {
 		});
 	});
 
-	describe('Get response', () => {
+	describe('Get response', async () => {
 
-		it('Should call the response generator with the first available response if no preferred statusCode is passed', () => {
+		it('Should call the response generator with the first available response if no preferred statusCode is passed', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -1792,7 +1792,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse();
+			const response = await path.getResponse();
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -1804,7 +1804,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should call the response generator with the first available response with given example if no preferred statusCode is passed', () => {
+		it('Should call the response generator with the first available response with given example if no preferred statusCode is passed', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -1829,7 +1829,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse(undefined, 'goodbye');
+			const response = await path.getResponse(undefined, 'goodbye');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -1841,7 +1841,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should call the response generator with the first available response with prefer example & no prefered statusCode, but no match', () => {
+		it('Should call the response generator with the first available response with prefer example & no prefered statusCode, but no match', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -1866,7 +1866,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse(undefined, 'sup');
+			const response = await path.getResponse(undefined, 'sup');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -1878,7 +1878,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should call the response generator with the preferred response based on the passed statusCode', () => {
+		it('Should call the response generator with the preferred response based on the passed statusCode', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -1908,7 +1908,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse('401');
+			const response = await path.getResponse('401');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 401,
@@ -1920,7 +1920,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should call the response generator with the preferred response based on the passed statusCode and passed example', () => {
+		it('Should call the response generator with the preferred response based on the passed statusCode and passed example', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -1959,7 +1959,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse('401', 'expired');
+			const response = await path.getResponse('401', 'expired');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 401,
@@ -1971,7 +1971,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should call the response generator with the first response if preferred response is not available', () => {
+		it('Should call the response generator with the first response if preferred response is not available', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -2001,7 +2001,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse('403');
+			const response = await path.getResponse('403');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -2013,7 +2013,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should not call the response generator with the preferred response based on the passed statusCode if response content is empty', () => {
+		it('Should not call the response generator with the preferred response based on the passed statusCode if response content is empty', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -2036,7 +2036,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse('401');
+			const response = await path.getResponse('401');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 401,
@@ -2046,7 +2046,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should not call the response generator with the first response if response content is empty', () => {
+		it('Should not call the response generator with the first response if response content is empty', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -2069,7 +2069,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse('403');
+			const response = await path.getResponse('403');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -2079,7 +2079,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should generate the response with the response\'s headers', () => {
+		it('Should generate the response with the response\'s headers', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -2113,7 +2113,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse();
+			const response = await path.getResponse();
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -2128,7 +2128,7 @@ describe('Paths', () => {
 			});
 		});
 
-		it('Should return a different response mime type if its defined', () => {
+		it('Should return a different response mime type if its defined', async () => {
 
 			const path = new Path({
 				uri: '/hello',
@@ -2146,7 +2146,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = path.getResponse();
+			const response = await path.getResponse();
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,

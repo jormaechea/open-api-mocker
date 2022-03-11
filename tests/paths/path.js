@@ -1829,7 +1829,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = await path.getResponse(undefined, 'goodbye');
+			const response = await path.getResponse(undefined, undefined, 'goodbye');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 200,
@@ -1959,7 +1959,7 @@ describe('Paths', () => {
 				}
 			});
 
-			const response = await path.getResponse('401', 'expired');
+			const response = await path.getResponse('401', undefined, 'expired');
 
 			assert.deepStrictEqual(response, {
 				statusCode: 401,

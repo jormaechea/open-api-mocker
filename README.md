@@ -49,6 +49,8 @@ docker run -v "$PWD/myschema.json:/app/schema.json" -p "3000:3000" jormaechea/op
 - [x] Request and response logging
 - [x] Servers basepath support
 - [x] Support x-faker and x-count extension methods to customise generated responses
+- [x] Support for `latency` and `latencyRate` to introduce random latency to the response. Latency is number of milliseconds to wait before returning the response, rate is a number between 0-100 to specify when to add this behaviour. 
+- [x] Support for `statusCode` and `statuscodeRate` to introduce a different statuscode to the response. Specify the statusCode to return and use the rate (a number between 0-100) to specify when to add this behaviour.
 - [ ] API Authentication
 
 ## Customizing Generated Responses
@@ -151,6 +153,10 @@ Will produce the following response:
     "string"
 ]
 ```
+
+## Chaos Engineering
+
+Besides generating fake data, you can also specify with the `prefer` header that you would like the mock API to respond in unpredictable ways. You can send different status code or add latency to the response by adding the `statusCode` and/or `latency` parameters inside the `prefer` header. Using the `statusCodeRate` and `latencyRate` parameters you can specify when to add these behaviours. Use a value between 0 and 100 (%) to add less or more randomness.
 
 ## Advanced usage
 

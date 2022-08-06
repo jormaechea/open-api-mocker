@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+Chaos experiments added. You can add a statuscode and latency delay.
+
 ## [1.11.1] - 2022-02-20
 ### Fixed
 - Responses that are just a number are now properly generated (#56)

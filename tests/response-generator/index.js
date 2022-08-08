@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const faker = require('faker');
+const { faker } = require('@faker-js/faker');
 const sinon = require('sinon');
 
 const ResponseGenerator = require('../../lib/response-generator');
@@ -508,22 +508,22 @@ describe('Response Generator', () => {
         'x-faker extension includes mustache template string',
 		() => {
 			sinon
-				.stub(faker.random, 'number')
+				.stub(faker.datatype, 'number')
 				.onFirstCall()
 				.returns(1)
 				.onSecondCall()
 				.returns(2);
 			const responseSchema = {
 				type: 'string',
-				'x-faker': '{{random.number}}+{{random.number}}'
+				'x-faker': '{{datatype.number}}+{{datatype.number}}'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, '1+2');
-			sinon.assert.calledTwice(faker.random.number);
-			sinon.assert.calledWithExactly(faker.random.number.getCall(0));
-			sinon.assert.calledWithExactly(faker.random.number.getCall(1));
+			sinon.assert.calledTwice(faker.datatype.number);
+			sinon.assert.calledWithExactly(faker.datatype.number.getCall(0));
+			sinon.assert.calledWithExactly(faker.datatype.number.getCall(1));
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is not in the namespace.method format', () => {
@@ -560,17 +560,17 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with value from faker when x-faker extension contains valid faker namespace, method and arguments', () => {
-			sinon.stub(faker.random, 'number').returns(1);
+			sinon.stub(faker.datatype, 'number').returns(1);
 			const responseSchema = {
 				type: 'integer',
-				'x-faker': 'random.number({ "max": 5 })'
+				'x-faker': 'datatype.number({ "max": 5 })'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 1);
 
-			sinon.assert.calledOnceWithExactly(faker.random.number, { max: 5 });
+			sinon.assert.calledOnceWithExactly(faker.datatype.number, { max: 5 });
 		});
 	});
 });

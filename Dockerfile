@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:16-alpine
 
 ARG open_api_mocker_version
 

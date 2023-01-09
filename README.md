@@ -59,7 +59,7 @@ realistic looking data when developing a UI against a mock API for instance.
 ### x-faker
 The _x-faker_ extension is valid for use on properties that have a primitive type (e.g. `string`/`integer`, etc.)
 and can be used within an API definition to use one or more methods from the excellent
-[faker](https://www.npmjs.com/package/faker) library for generating random data.
+[faker](https://www.npmjs.com/package/@faker-js/faker) library for generating random data.
 
 Given the following API definition:
 ```yaml
@@ -91,7 +91,7 @@ paths:
                     x-faker: '{{name.firstName}} {{name.lastName}}'
                   age:
                     type: string
-                    x-faker: 'random.number({ "min": 1, "max": 20 })'
+                    x-faker: 'datatype.number({ "min": 1, "max": 20 })'
 
 ```
 

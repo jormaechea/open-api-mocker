@@ -36,6 +36,7 @@
     "sinon": "^11.1.2"
   },
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "ajv": "^6.12.6",
     "ajv-openapi": "^2.0.0",
     "body-parser": "^1.19.0",
@@ -44,7 +45,6 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "faker": "^5.5.3",
     "js-yaml": "^4.1.0",
     "json-refs": "^3.0.15",
     "lllog": "^1.1.2",

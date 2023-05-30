@@ -82,16 +82,16 @@ paths:
                 properties:
                   firstName:
                     type: string
-                    x-faker: name.firstName
+                    x-faker: person.firstName
                   lastName:
                     type: string
-                    x-faker: name.lastName
+                    x-faker: person.lastName
                   fullName:
                     type: string
-                    x-faker: '{{name.firstName}} {{name.lastName}}'
+                    x-faker: '{{person.firstName}} {{person.lastName}}'
                   age:
                     type: string
-                    x-faker: 'random.number({ "min": 1, "max": 20 })'
+                    x-faker: 'number.int({ "min": 1, "max": 20 })'
 
 ```
 
@@ -106,9 +106,9 @@ A JSON response similar to the following would be produced:
 ```
 
 The _x-faker_ extension accepts values in 3 forms:
-1. _fakerNamespace.method_. e.g. `random.uuid`
-2. _fakerNamespace.method({ "methodArgs": "in", "json": "format" })_. e.g. `random.number({ "max": 100 })`
-3. A mustache template string making use of the 2 forms above. e.g. `My name is {{name.firstName}} {{name.lastName}}`
+1. _fakerNamespace.method_. e.g. `string.uuid`
+2. _fakerNamespace.method({ "methodArgs": "in", "json": "format" })_. e.g. `number.int({ "max": 100 })`
+3. A mustache template string making use of the 2 forms above. e.g. `My name is {{person.firstName}} {{person.lastName}}`
 
 *NOTE*: To avoid new fake data from being generated on every call, up to 10 responses per endpoint are cached
 based on the incoming query string, request body and headers.

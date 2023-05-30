@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2023-05-30
+### Added
+- Added support for node 16 and 18
+
+### Changed
+- Moved to new `@faker-js/faker@8` instead of old and nuked `faker` **BREAKING CHANGE** (See [docs](https://fakerjs.dev/) for migration) (#63)
+- The `x-faker` property now has priority over `example` when generating responses **BREAKING CHANGE** (#59)
+
+### Removed
+- Dropped support for node 10 and 12
+
 ## [1.11.1] - 2022-02-20
 ### Fixed
 - Responses that are just a number are now properly generated (#56)

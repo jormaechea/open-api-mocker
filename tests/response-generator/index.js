@@ -1,10 +1,12 @@
 'use strict';
 
 const assert = require('assert');
-const { faker } = require('@faker-js/faker');
 const sinon = require('sinon');
 
 const ResponseGenerator = require('../../lib/response-generator');
+const getFakerLocale = require('../../lib/utils/get-faker-locale');
+
+const faker = getFakerLocale();
 
 describe('Response Generator', () => {
 	beforeEach(() => {
@@ -465,17 +467,17 @@ describe('Response Generator', () => {
 
 		it('Should return a generated response with value generated using relevant faker method if x-faker extension is ' +
 			'present in and method exists in faker', () => {
-			sinon.stub(faker.name, 'firstName').returns('bob');
+			sinon.stub(faker.person, 'firstName').returns('bob');
 			const responseSchema = {
 				type: 'string',
-				'x-faker': 'name.firstName'
+				'x-faker': 'person.firstName'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 'bob');
 
-			sinon.assert.calledOnceWithExactly(faker.name.firstName);
+			sinon.assert.calledOnceWithExactly(faker.person.firstName);
 		});
 
 		it('Should return a generated response with date in ISO format if type is date and x-faker is used', () => {
@@ -508,22 +510,18 @@ describe('Response Generator', () => {
         'x-faker extension includes mustache template string',
 		() => {
 			sinon
-				.stub(faker.datatype, 'number')
-				.onFirstCall()
-				.returns(1)
-				.onSecondCall()
-				.returns(2);
+				.stub(faker.helpers, 'fake')
+				.returns('1+2');
+
 			const responseSchema = {
 				type: 'string',
-				'x-faker': '{{datatype.number}}+{{datatype.number}}'
+				'x-faker': '{{number.int}}+{{number.int}}'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, '1+2');
-			sinon.assert.calledTwice(faker.datatype.number);
-			sinon.assert.calledWithExactly(faker.datatype.number.getCall(0));
-			sinon.assert.calledWithExactly(faker.datatype.number.getCall(1));
+			sinon.assert.calledOnceWithExactly(faker.helpers.fake, '{{number.int}}+{{number.int}}');
 		});
 
 		it('Should return a generated response with standard primitive value if x-faker field is not in the namespace.method format', () => {
@@ -560,17 +558,17 @@ describe('Response Generator', () => {
 		});
 
 		it('Should return a generated response with value from faker when x-faker extension contains valid faker namespace, method and arguments', () => {
-			sinon.stub(faker.datatype, 'number').returns(1);
+			sinon.stub(faker.number, 'int').returns(1);
 			const responseSchema = {
 				type: 'integer',
-				'x-faker': 'datatype.number({ "max": 5 })'
+				'x-faker': 'number.int({ "max": 5 })'
 			};
 
 			const response = ResponseGenerator.generate(responseSchema);
 
 			assert.strictEqual(response, 1);
 
-			sinon.assert.calledOnceWithExactly(faker.datatype.number, { max: 5 });
+			sinon.assert.calledOnceWithExactly(faker.number.int, { max: 5 });
 		});
 	});
 });

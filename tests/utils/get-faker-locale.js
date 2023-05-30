@@ -2,6 +2,9 @@
 
 const assert = require('assert');
 const sinon = require('sinon');
+
+const { allFakers } = require('@faker-js/faker');
+
 const getFakerLocale = require('../../lib/utils/get-faker-locale');
 
 describe('Utils', () => {
@@ -22,7 +25,7 @@ describe('Utils', () => {
 		context('When locale has no country', () => {
 			it('Should return the user locale if it is supported by faker', () => {
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'en');
+				assert.deepStrictEqual(locale, allFakers.en);
 			});
 
 			it('Should return the default locale (en) if user locale is not supported by faker', () => {
@@ -30,7 +33,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'zz' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'en');
+				assert.deepStrictEqual(locale, allFakers.en);
 			});
 		});
 
@@ -41,7 +44,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'en-US' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'en_US');
+				assert.deepStrictEqual(locale, allFakers.en_US);
 			});
 
 			it('Should return the user locale without country if locale is equals to country', () => {
@@ -49,7 +52,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'es-ES' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'es');
+				assert.deepStrictEqual(locale, allFakers.es);
 			});
 
 			it('Should return the user locale without country if it is not supported by faker but the base locale is', () => {
@@ -57,7 +60,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'en-ZZ' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'en');
+				assert.deepStrictEqual(locale, allFakers.en);
 			});
 
 			it('Should return the default locale if user locale nor the base locale are supported by faker', () => {
@@ -65,7 +68,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'aa-ZZ' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'en');
+				assert.deepStrictEqual(locale, allFakers.en);
 			});
 		});
 
@@ -75,7 +78,7 @@ describe('Utils', () => {
 				localeFake.returns({ locale: 'pt-PT' });
 
 				const locale = getFakerLocale();
-				assert.strictEqual(locale, 'pt_PT');
+				assert.deepStrictEqual(locale, allFakers.pt_PT);
 			});
 		});
 

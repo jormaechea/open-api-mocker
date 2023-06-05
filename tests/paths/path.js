@@ -2157,4 +2157,85 @@ describe('Paths', () => {
 		});
 	});
 
+	describe('Match request example to reponse example', () => {
+		it('Should return an example response if it matches an example request by name', () => {
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				requestBody: {
+					required: true,
+					content: {
+						'application/json': {
+							examples: {
+								foo: { value: { name: 'Fred' } },
+								bar: { value: { name: 'Frank' } }
+							}
+						}
+					}
+				},
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'text/plain': {
+								examples: {
+									foo: 'Hello friend Fred',
+									bar: 'Frank is a friend'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.findPreferredExampleByRequest({});
+
+			assert.deepStrictEqual(response, undefined);
+
+		});
+
+		it('can determine preferred example by request content', () => {
+			const path = new Path({
+				uri: '/hello',
+				httpMethod: 'get',
+				parameters: undefined,
+				requestBody: {
+					required: true,
+					content: {
+						'text/plain': {
+							examples: {
+								simple: { value: 'hello' },
+								another: { value: 'testing' }
+							}
+						},
+						'application/text': {
+							examples: {
+								foo: { value: { name: 'Fred' } },
+								bar: { value: { name: 'Frank' } }
+							}
+						}
+					}
+				},
+				responses: {
+					200: {
+						description: 'OK',
+						content: {
+							'text/plain': {
+								examples: {
+									foo: 'Hello friend Fred',
+									bar: 'Frank is a friend'
+								}
+							}
+						}
+					}
+				}
+			});
+
+			const response = path.findPreferredExampleByRequest({ name: 'Frank' });
+
+			assert.deepStrictEqual(response, 'bar');
+
+		});
+	});
 });

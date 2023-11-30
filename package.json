@@ -38,6 +38,7 @@
     "sinon": "^15.1.0"
   },
   "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.0",
     "@faker-js/faker": "^8.0.2",
     "ajv": "^6.12.6",
     "ajv-openapi": "^2.0.0",
@@ -48,10 +49,10 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "js-yaml": "^4.1.0",
-    "json-refs": "^3.0.15",
     "lllog": "^1.1.2",
     "micro-memoize": "^4.1.2",
     "parse-prefer-header": "^1.0.0",
+    "replace-circular-object": "^1.0.1",
     "superstruct": "^0.6.2",
     "yargs": "^17.7.2"
   },
